@@ -57,21 +57,6 @@ const productData = [
       { size: 'L', inventory: 0 },
       { size: 'XL', inventory: 0 }
     ] },
-    { id: '5', name: 'Unisex White Hanes cotton T-shirt', imageThumbnail: [() => import('../assets/07a.webp')], description: 'This is an even greater product.', price: 6.36, 
-    productCategory: 'clothing',
-    featured: 'exclusive-apparel',
-    imageUrl: {
-      silver: () => import('../assets/07A.webp'),
-      white: () => import('../assets/07B.webp')
-    },
-    variations: ['silver', 'white'], 
-    sizes: [
-      { size: 'XS', inventory: 0 },
-      { size: 'S', inventory: 0 },
-      { size: 'M', inventory: 0 },
-      { size: 'L', inventory: 0 },
-      { size: 'XL', inventory: 0 }
-    ] },
     { id: '6', name: 'Cyber CEO/Mom Ladies Cotton T-shirt', imageThumbnail: [() => import('../assets/08.webp')], description: 'Gildan 5.3 oz. These are sized higher for the request of having something for moms that just had a baby.', 
     price: 8.34, 
     productCategory: 'clothing',

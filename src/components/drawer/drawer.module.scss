@@ -11,7 +11,10 @@
   background-color: #ffffff;
   border-color: black;
   border-width: 2px;
-  position: absolute;
+  position: fixed;
+  opacity: 0;
+  animation: fadeIn 0.5s forwards;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
 }
 .logo {
   max-width: 150px;
@@ -41,6 +44,15 @@
 .img1 {
   align-self: start;
 }
-.div3 {
-  border: 1px solid black;
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateX(0px);
+  }
 }

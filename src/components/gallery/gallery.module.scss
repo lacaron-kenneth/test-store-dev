@@ -1,11 +1,15 @@
 .gallery {
   display: flex;
-  flex-direction: row;
-  flex-wrap: wrap; /* Allow wrapping */
+  flex-wrap: wrap; /* Allow wrapping to the next line */
   gap: 16px;
-  overflow: hidden;
-  align-content: center;
-  justify-content: center;
-  width: 100%; /* Ensure the gallery container takes the full width */
-  box-sizing: border-box; /* Consider padding in width calculations */
+  justify-content: space-between; /* Center items horizontally */
+  width: 100%;
+  box-sizing: border-box;
+  max-width: 100%; /* Ensure it doesn’t overflow its container */
+}
+
+@media (max-width: 800px) {
+  .gallery {
+    justify-content: center; /* Adjust spacing for smaller screens */
+  }
 }

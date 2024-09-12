@@ -6,7 +6,7 @@ export default createBoard({
     Board: () => <Gallery />,
     isSnippet: true,
     environmentProps: {
-        windowWidth: 1156,
+        windowWidth: 833,
         windowHeight: 640,
     },
 });

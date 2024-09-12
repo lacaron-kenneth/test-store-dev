@@ -27,7 +27,7 @@ export const Merch = ({
                 .then((img: any) => {
                     setLoadedImage(img.default); // Set the loaded image URL
                 })
-                .catch((err) => {
+                .catch((err : unknown) => {
                     console.error('Failed to load image:', err);
                     setLoadedImage(Fallback); // Fallback image if dynamic import fails
                 });

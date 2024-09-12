@@ -18,7 +18,6 @@ export const HomePage = ({ className }: HomePageProps) => {
                 <title>Cyberbacker Store</title>
                 <meta name='description' content='Cyberbacker Official Merch Store. Browse different types of merchandises from hoodies to tumblers.'/>
                 <meta name='keywords' content='cyberbacker, cyberbacker store, cb merch store, cyberbacker merchandise'/>
-
             </Helmet>
             <Header />
             <Hero />

@@ -1,7 +1,7 @@
 import classNames from 'classnames';
 import styles from './browse-page.module.scss';
 
-export interface BrowsePageProps {
+export interface BrowsPageProps {
     className?: string;
 }
 

@@ -11,16 +11,15 @@ export interface HeaderProps {
 
 export const Header = ({ className }: HeaderProps) => {
     const [isDrawerVisible, setDrawerVisible] = useState(false);
-    const drawerRef = useRef(null); // To reference the drawer element
-
+    const drawerRef = useRef<HTMLDivElement | null>(null); // Ref for the drawer element
     function toggleDrawer() {
         setDrawerVisible(!isDrawerVisible);
     }
 
     // Handle outside click
     useEffect(() => {
-        function handleClickOutside(event) {
-            if (drawerRef.current && !drawerRef.current.contains(event.target)) {
+        function handleClickOutside(event : MouseEvent) {
+            if (drawerRef.current && !drawerRef.current.contains(event.target as Node)) {
                 setDrawerVisible(false); // Close drawer if clicked outside
             }
         }

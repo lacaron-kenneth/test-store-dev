@@ -1,7 +1,10 @@
 import classNames from 'classnames';
 import styles from './gallery.module.scss';
 import { Merch } from '../merch/merch';
+// @ts-ignore
+
 import productData from '../../data/data_merch.jsx';
+
 
 export interface GalleryProps {
     className?: string;
@@ -9,6 +12,9 @@ export interface GalleryProps {
 export const Gallery = ({ className }: GalleryProps) => {
     return (
         <div className={styles.gallery}>
+
+{/* @ts-ignore */}
+
             {productData.map((product, index) => (
                 <Merch
                     key={product.id}

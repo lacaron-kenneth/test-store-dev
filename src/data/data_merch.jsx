@@ -57,7 +57,7 @@ const productData = [
       { size: 'L', inventory: 0 },
       { size: 'XL', inventory: 0 }
     ] },
-    { id: '5', name: 'Unisex White Hanes cotton T-shirt', imageThumbnail: [() => import('../assets/07A.webp')], description: 'This is an even greater product.', price: 6.36, 
+    { id: '5', name: 'Unisex White Hanes cotton T-shirt', imageThumbnail: [() => import('../assets/07a.webp')], description: 'This is an even greater product.', price: 6.36, 
     productCategory: 'clothing',
     featured: 'exclusive-apparel',
     imageUrl: {

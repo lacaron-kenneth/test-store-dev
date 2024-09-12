@@ -1,0 +1,11 @@
+.gallery {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap; /* Allow wrapping */
+  gap: 16px;
+  overflow: hidden;
+  align-content: center;
+  justify-content: center;
+  width: 100%; /* Ensure the gallery container takes the full width */
+  box-sizing: border-box; /* Consider padding in width calculations */
+}

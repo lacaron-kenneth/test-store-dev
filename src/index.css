@@ -1,5 +1,51 @@
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap');
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+body {
+	line-height: 1;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
 :root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-family: var(--font, Manrope);
   line-height: 1.5;
   font-weight: 400;
   font-synthesis: none;
@@ -7,6 +53,62 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
+}
+
+:root {
+  /* Gaps */
+  --screen-content-gap: 32px;
+
+  /* Animation */
+  --transition: transition: 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+
+  /* Font Size */
+  --small: 12px;
+  --caption: 13px;
+  --footnote: 14px;
+  --body: 16px;
+  --body-large: 18px;
+  --headline: 20px;
+  --heading-5: 24px;
+  --heading-4: 30px;
+  --heading-3: 40px;
+  --heading-2: 50px;
+  --heading-1: 60px;
+
+  /* Colors */
+  --background-primary: rgb(255, 255, 255);
+  --background-secondary: rgb(255, 255, 255, 0.1);
+  --background-tertiary: rgb(0, 0, 0, 0.05);
+  --button-foreground: rgb(255, 255, 255);
+  --container-background: rgb(255, 255, 255, 0.6);
+  --container-background-recessed: rgb(255, 255, 255, 0.9);
+  --container-background-secondary: rgb(255, 255, 255, 0.1);
+  --container-background-tertiary: rgb(255, 255, 255, 0.9);
+  --container-border: rgb(255, 255, 255, 0.5);
+  --container-border-secondary: rgb(255, 255, 255, 0.2);
+  --container-divider: rgb(0, 0, 0, 0.1);
+  --container-divider-secondary: rgb(0, 0, 0, 0.2);
+  --foreground-primary: rgb(0, 0, 0);
+  --foreground-secondary: rgb(0, 0, 0, 0.7);
+  --foreground-tertiary: rgb(0, 0, 0, 0.5);
+
+  @media (prefers-color-scheme: dark) {
+    --background-primary: rgb(0, 0, 0);
+    --background-secondary: rgb(0, 0, 0, 0.1);
+    --background-tertiary: rgb(255, 255, 255, 0.1);
+    --button-foreground: rgb(255, 255, 255);
+    --container-background: rgb(0, 0, 0, 0.6);
+    --container-background-recessed: rgb(0, 0, 0, 0.2);
+    --container-background-secondary: rgb(0, 0, 0, 0.1);
+    --container-background-tertiary: rgb(255, 255, 255, 0.1);
+    --container-border: rgb(255, 255, 255, 0.1);
+    --container-border-secondary: rgb(255, 255, 255, 0.1);
+    --container-divider: rgb(255, 255, 255, 0.1);
+    --container-divider-secondary: rgb(255, 255, 255, 0.2);
+    --foreground-primary: rgb(0, 0, 0);
+    --foreground-secondary: rgb(0, 0, 0, 0.7);
+    --foreground-tertiary: rgb(0, 0, 0, 0.5);
+  }
 }
 
 a {

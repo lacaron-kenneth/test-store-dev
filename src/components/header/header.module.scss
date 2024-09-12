@@ -1,0 +1,50 @@
+.header {
+  display: flex;
+  align-items: center; /* Ensures all divs stretch to the same height */
+  gap: 32px;
+  justify-content: space-between;
+  overflow: visible;
+  top: 0px;
+}
+.header-section {
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.search {
+  flex: 3;
+}
+.nav {
+  flex: 2;
+  gap: 32px;
+  justify-content: end;
+
+  @media (max-width: 800px) {
+    display: none;
+  }
+}
+.logo {
+  flex: 2;
+  align-self: center;
+}
+.logo-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain; /* Image scales to fit inside the div without distortion */
+  min-width: 200px;
+}
+.nav-text {
+  text-align: start;
+  font-weight: 600;
+  line-height: normal;
+  letter-spacing: -0.96px;
+  color: var(--foreground-secondary);
+  font-size: var(--headline);
+}
+.hamburger {
+  display: none;
+  @media (max-width: 800px) {
+    display: flex;
+  }
+}

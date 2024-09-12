@@ -1,0 +1,26 @@
+.merch-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  border-radius: 15px;
+  flex: 1 1 300px; /* Allow flexibility with a minimum width */
+  width: 100%; /* Prevent it from growing too large */
+  box-sizing: border-box; /* Consider padding in width calculations */
+}
+.content {
+  display: flex;
+  flex-direction: column;
+  min-width: 390px;
+  align-items: center;
+  flex: 1 0 0;
+  gap: 32px;
+  padding: 16px;
+}
+.img {
+  width: 100%; /* Image takes full width of the div */
+  height: auto; /* Preserve aspect ratio */
+  object-fit: contain; /* Ensure the image fits inside the container */
+}
+

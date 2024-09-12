@@ -1,0 +1,46 @@
+.drawer {
+  display: flex;
+  flex-direction: column;
+  padding: var(--headline) 20px 20px;
+  padding-top: 20px;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background-color: #ffffff;
+  border-color: black;
+  border-width: 2px;
+  position: absolute;
+}
+.logo {
+  max-width: 150px;
+}
+.div1 {
+  min-height: 20px;
+  border: 1px solid #808080;
+  border-radius: 16px;
+  box-shadow: 3px 3px 2px black;
+  opacity: 0.1;
+}
+.nav {
+  display: flex;
+  flex-direction: column;
+  row-gap: var(--footnote);
+}
+.div2 {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+.footer {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.img1 {
+  align-self: start;
+}
+.div3 {
+  border: 1px solid black;
+}

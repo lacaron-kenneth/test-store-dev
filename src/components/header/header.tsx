@@ -4,13 +4,13 @@ import LogoPng from '../../assets/logo.png';
 import MenuAlignLeftDescSvg from '../../assets/menu align left desc.svg';
 import { Drawer } from '../drawer/drawer';
 import { useState, useEffect, useRef } from 'react';
+import { Link } from 'react-router-dom';
 export interface HeaderProps {
     className?: string;
 }
 
 export const Header = ({ className }: HeaderProps) => {
-
- const [isDrawerVisible, setDrawerVisible] = useState(false);
+    const [isDrawerVisible, setDrawerVisible] = useState(false);
     const drawerRef = useRef(null); // To reference the drawer element
 
     function toggleDrawer() {
@@ -39,14 +39,20 @@ export const Header = ({ className }: HeaderProps) => {
 
     return (
         <div className={styles.header}>
-            <div className={classNames(styles['header-section'], styles.logo)}>
+            <Link to={"/"} className={classNames(styles['header-section'], styles.logo)}>
                 <img src={LogoPng} alt="" className={classNames(styles.logo, styles['logo-img'])} />
-            </div>
+            </Link>
             <div className={classNames(styles['header-section'], styles.search)}></div>
             <div className={classNames(styles['header-section'], styles.nav)}>
-                <h2 className={styles['nav-text']}>Merchandise</h2>
-                <h2 className={styles['nav-text']}>Profile</h2>
-                <h2 className={styles['nav-text']}>Cart</h2>
+                <Link to={"/browse"}>
+                    <h2 className={styles['nav-text']}>Merchandise</h2>
+                </Link>
+                <Link to={"/"}>
+                    <h2 className={styles['nav-text']}>Profile</h2>
+                </Link>
+                <Link to={"/"}>
+                    <h2 className={styles['nav-text']}>Cart</h2>
+                </Link>
             </div>
             <div className={styles.hamburger}>
                 <img src={MenuAlignLeftDescSvg} alt="" onClick={toggleDrawer} />

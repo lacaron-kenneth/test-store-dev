@@ -130,18 +130,7 @@ const productData = [
     sizes: [
       { size: 'Available', inventory: 0 }
     ] },
-    { id: '13', name: 'Folded VR Cardboard',  imageThumbnail: [() => import('../assets/15A.webp')], description: 'QR code in folded unit leads to 3D videos of different situations that a Real Estate agent could utilize a Cyberbacker.', 
-    productCategory: 'nonclothing',
-    featured: 'swag-essentials',
-    price: 5.10, 
-    imageUrl: {
-      one: () => import('../assets/15A.webp'),
-      two: () => import('../assets/15B.webp')
-    },
-    variations: ['one', 'two'],
-    sizes: [
-      { size: 'Available', inventory: 0 }
-    ] },
+   
     { id: '14', name: 'Closed Back Fitted Table Cover', description: 'Available in fitted 6\' or 8\', or draped 6\' or 8\'.', price: 144.00, imageThumbnail: [() => import('../assets/16.webp')],
     productCategory: 'nonclothing',
     featured: 'swag-essentials',

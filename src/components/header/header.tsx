@@ -5,6 +5,7 @@ import MenuAlignLeftDescSvg from '../../assets/menu align left desc.svg';
 import { Drawer } from '../drawer/drawer';
 import { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
+import { SearchBar } from '../search-bar/search-bar';
 export interface HeaderProps {
     className?: string;
 }
@@ -18,7 +19,7 @@ export const Header = ({ className }: HeaderProps) => {
 
     // Handle outside click
     useEffect(() => {
-        function handleClickOutside(event : MouseEvent) {
+        function handleClickOutside(event: MouseEvent) {
             if (drawerRef.current && !drawerRef.current.contains(event.target as Node)) {
                 setDrawerVisible(false); // Close drawer if clicked outside
             }
@@ -38,18 +39,20 @@ export const Header = ({ className }: HeaderProps) => {
 
     return (
         <div className={styles.header}>
-            <Link to={"/"} className={classNames(styles['header-section'], styles.logo)}>
+            <Link to={'/'} className={classNames(styles['header-section'], styles.logo)}>
                 <img src={LogoPng} alt="" className={classNames(styles.logo, styles['logo-img'])} />
             </Link>
-            <div className={classNames(styles['header-section'], styles.search)}></div>
+            <div className={classNames(styles.search, styles['header-section'])}>
+                <SearchBar />
+            </div>
             <div className={classNames(styles['header-section'], styles.nav)}>
-                <Link to={"/browse"}>
+                <Link to={'/browse'}>
                     <h2 className={styles['nav-text']}>Merchandise</h2>
                 </Link>
-                <Link to={"/"}>
+                <Link to={'/'}>
                     <h2 className={styles['nav-text']}>Profile</h2>
                 </Link>
-                <Link to={"/"}>
+                <Link to={'/'}>
                     <h2 className={styles['nav-text']}>Cart</h2>
                 </Link>
             </div>

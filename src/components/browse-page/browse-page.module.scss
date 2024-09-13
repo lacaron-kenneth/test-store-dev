@@ -1,5 +1,5 @@
 .root {
-    display: flex;
+  display: flex;
   flex-direction: column;
   padding: 60px;
   box-sizing: border-box; /* Ensure padding is included in total width */
@@ -7,10 +7,14 @@
   position: relative; /* Ensure .homepage doesn't break sticky behavior */
   overflow: auto; /* Change to auto so sticky can work properly */
 
-  @media (max-width: 800px){
+  @media (max-width: 800px) {
     padding: 30px;
   }
-  @media (max-width: 500px){
+  @media (max-width: 500px) {
     padding: 20px;
   }
+  min-height: 100vh;
+}
+.header1 {
+  text-align: center;
 }

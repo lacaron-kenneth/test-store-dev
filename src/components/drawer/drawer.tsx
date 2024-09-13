@@ -2,6 +2,7 @@ import classNames from 'classnames';
 import styles from './drawer.module.scss';
 import LogoPng from '../../assets/logo.png';
 import XLogoSvg from '../../assets/x  logo.svg';
+import { SearchBar } from '../search-bar/search-bar';
 
 export interface DrawerProps {
     className?: string;
@@ -16,7 +17,7 @@ export const Drawer = ({ className }: DrawerProps) => {
         <div className={styles.drawer}>
             <div className={styles.div2}>
                 <img src={LogoPng} alt="" className={styles.logo} />
-                <div className={styles.div1} />
+                <SearchBar />
                 <div className={styles.nav}>
                     <h3>Merchandise</h3>
                     <h3>Profile</h3>

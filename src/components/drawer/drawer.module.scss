@@ -15,6 +15,7 @@
   opacity: 0;
   animation: fadeIn 0.5s forwards;
   box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+  z-index: 1000;
 }
 .logo {
   max-width: 150px;

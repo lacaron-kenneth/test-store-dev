@@ -1,4 +1,3 @@
-import { Header } from '../header/header';
 import classNames from 'classnames';
 import styles from './browse-page.module.scss';
 import { useLocation } from 'react-router-dom';
@@ -40,7 +39,6 @@ export const BrowsePage = ({ className }: BrowsePageProps) => {
                     content="cyberbacker, cyberbacker store, cb merch store, cyberbacker merchandise"
                 />
             </Helmet>
-            <Header />
             <h1 className={styles.header1}>Browse Products</h1>
             <Gallery products={filteredProducts} />{' '}
             {/* Pass the filtered products to the Gallery */}

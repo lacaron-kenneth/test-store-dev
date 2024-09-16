@@ -34,6 +34,7 @@ export const SearchBar = ({ className }: SearchBarProps) => {
             />
 
             <select
+                title='searchCategory'
                 value={selectedCategory}
                 onChange={(e) => setSelectedCategory(e.target.value)}
                 className={styles.categorySelect}

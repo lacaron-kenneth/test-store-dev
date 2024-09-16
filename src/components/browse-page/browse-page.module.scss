@@ -1,7 +1,6 @@
 .root {
   display: flex;
   flex-direction: column;
-  padding: 60px;
   box-sizing: border-box; /* Ensure padding is included in total width */
   gap: 60px;
   position: relative; /* Ensure .homepage doesn't break sticky behavior */

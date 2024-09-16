@@ -5,6 +5,7 @@ import { Merch } from '../merch/merch';
 import productData from '../../data/data_merch.jsx';
 import { useState } from 'react';
 import merchStyles from '../merch/merch.module.scss';
+import { Link } from 'react-router-dom';
 
 export interface GalleryProps {
     className?: string;
@@ -75,7 +76,6 @@ export const Gallery = ({ className, products = productData }: GalleryProps) => 
                     value={selectedCategory}
                     onChange={(e) => setSelectedCategory(e.target.value)}
                     name="selectCategory"
-                    defaultValue={''}
                     className={styles.selectButton}
                 >
                     <option value={''}>All Categories</option>
@@ -116,13 +116,15 @@ export const Gallery = ({ className, products = productData }: GalleryProps) => 
                         className={styles['fade-up']}
                         style={{ '--animation-delay': `${index * 0.2}s` } as React.CSSProperties} // Stagger delay
                     >
-                        <Merch
-                            key={product.id}
-                            image={product.imageThumbnail[0]} // Access the first function in the array
-                            name={product.name}
-                            description={product.description}
-                            price={product.price}
-                        />
+                        <Link to={`/merch/${product.id}`} className={styles.productLink}>
+                            <Merch
+                                key={product.id}
+                                image={product.imageThumbnail[0]} // Access the first function in the array
+                                name={product.name}
+                                description={product.description}
+                                price={product.price}
+                            />
+                        </Link>
                     </div>
                 ))}
             </div>

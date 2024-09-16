@@ -19,7 +19,7 @@ export const Search = ({ className }: SearchProps) => {
     const selectedCategory = searchParams.get('category') || 'all'; // Get category from URL
 
     // Filter products by search term and category
-    const filteredProducts = productData.filter(product => {
+    const filteredProducts = productData.filter((product: { productCategory: string; name: string; }) => {
         const matchesCategory = selectedCategory === 'all' || product.productCategory === selectedCategory;
         const matchesSearch = product.name.toLowerCase().includes(searchTerm.toLowerCase());
         return matchesCategory && matchesSearch;

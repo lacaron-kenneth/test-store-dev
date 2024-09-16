@@ -1,59 +1,57 @@
-import classNames from 'classnames';
-import styles from './product-page.module.scss';
+import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import styles from './product-page.module.scss';
+import { useCart } from '../../context/CartContext';
 // @ts-ignore
 import productData from '../../data/data_merch.jsx';
 
-export interface ProductPageProps {
-    className?: string;
-}
-
-export const ProductPage = ({ className }: ProductPageProps) => {
-    const { id } = useParams<{ id: string }>(); // Get the product ID from the URL
+export const ProductPage = () => {
+    const { id } = useParams(); // Get the product ID from the URL
     const product = productData.find((p: any) => p.id === id); // Find the product by ID
 
-    const [loadedImage, setLoadedImage] = useState('');
-    const [selectedVariation, setSelectedVariation] = useState(product?.variations[0] || ''); // Set default variation
-    const [quantity, setQuantity] = useState<number>(1); // Quantity state
+    const [loadedImage, setLoadedImage] = useState<string>('');
+    const [selectedVariation, setSelectedVariation] = useState<string>(product.variations[0]);
+    const [quantity, setQuantity] = useState<number>(1);
 
+    const { addToCart } = useCart(); // Use the cart context to add items
+
+    // Function to load the image for the selected variation
     useEffect(() => {
         const loadImage = async () => {
-            if (product) {
-                const image = await product.imageUrl[selectedVariation](); // Load image dynamically based on selected variation
-                setLoadedImage(image.default); // Set the loaded image in state
-            }
+            const image = await product.imageUrl[selectedVariation](); // Dynamically import image based on selected variation
+            setLoadedImage(image.default); // Set the image once loaded
         };
-        if (product) {
-            loadImage();
-        }
-    }, [selectedVariation, product]); // Reload image when the variation changes or when the product loads
+        loadImage();
+    }, [selectedVariation]);
 
-    if (!product) {
-        return <div>Product not found.</div>; // Handle invalid product ID
-    }
-
-    // Handle variation change
+    // Handle variation change (color selection)
     const handleVariationChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setSelectedVariation(event.target.value);
     };
 
     // Handle quantity change
     const handleQuantityChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const newQuantity = parseInt(event.target.value, 10);
-        if (newQuantity > 0) {
-            setQuantity(newQuantity);
-        }
+        const value = parseInt(event.target.value, 10);
+        setQuantity(value >= 1 ? value : 1); // Ensure quantity is at least 1
+    };
+
+    // Handle adding the product to the cart
+    const handleAddToCart = () => {
+        addToCart({
+            id: product.id,
+            name: product.name,
+            price: product.price,
+            variation: selectedVariation,
+            image: loadedImage, // Pass the currently loaded image
+            quantity: quantity,
+        });
+        alert(`Added ${quantity} ${product.name} to the cart!`);
     };
 
     return (
-        <div className={classNames(styles.merch, className)}>
+        <div className={styles.merch}>
             <div className={styles['image-wrapper']}>
-                {loadedImage ? (
-                    <img src={loadedImage} alt={product.name} className={styles.img} />
-                ) : (
-                    <p>Loading image...</p>
-                )}
+                <img src={loadedImage} alt={product.name} className={styles.img} />
             </div>
             <div className={styles.content}>
                 <h1 className={styles.name}>{product.name}</h1>
@@ -88,13 +86,10 @@ export const ProductPage = ({ className }: ProductPageProps) => {
                     />
                 </div>
 
-                {/* Add to Cart & Buy Now buttons */}
+                {/* Add to Cart button */}
                 <div className={styles.actions}>
-                    <button onClick={() => alert(`Added ${quantity} ${product.name} to cart!`)}>
+                    <button onClick={handleAddToCart}>
                         Add to Cart
-                    </button>
-                    <button onClick={() => alert(`Purchased ${quantity} ${product.name}!`)}>
-                        Buy Now
                     </button>
                 </div>
             </div>

@@ -52,7 +52,7 @@ export const Header = ({ className }: HeaderProps) => {
                 <Link to={'/'}>
                     <h2 className={styles['nav-text']}>Profile</h2>
                 </Link>
-                <Link to={'/'}>
+                <Link to={'/cart'}>
                     <h2 className={styles['nav-text']}>Cart</h2>
                 </Link>
             </div>

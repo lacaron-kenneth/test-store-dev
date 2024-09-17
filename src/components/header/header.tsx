@@ -6,6 +6,9 @@ import { Drawer } from '../drawer/drawer';
 import { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { SearchBar } from '../search-bar/search-bar';
+import { MiniCart } from '../mini-cart/mini-cart';
+import { FaShoppingCart } from 'react-icons/fa';
+
 export interface HeaderProps {
     className?: string;
 }
@@ -55,6 +58,17 @@ export const Header = ({ className }: HeaderProps) => {
                 <Link to={'/cart'}>
                     <h2 className={styles['nav-text']}>Cart</h2>
                 </Link>
+                <div className={styles.cartWrapper}>
+                    {/* Cart icon */}
+                    <Link to="/cart" className={styles.cartIcon}>
+                        <FaShoppingCart /> {/* Use the cart icon here */}
+                    </Link>
+
+                    {/* Mini Cart */}
+                    <div className={styles.miniCartWrapper}>
+                        <MiniCart />
+                    </div>
+                </div>
             </div>
             <div className={styles.hamburger}>
                 <img src={MenuAlignLeftDescSvg} alt="" onClick={toggleDrawer} />

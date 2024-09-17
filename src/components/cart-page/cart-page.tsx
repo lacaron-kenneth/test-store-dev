@@ -2,6 +2,7 @@
 import React from 'react';
 import { useCart } from '../../context/CartContext';
 import styles from './cart-page.module.scss';
+import { Link } from 'react-router-dom';
 
 export const CartPage = () => {
     const { cart, updateQuantity, removeFromCart } = useCart();
@@ -31,7 +32,9 @@ export const CartPage = () => {
                                 />
                             </div>
                             <div className={styles.cartDetails}>
+                                <Link to={`/merch/${item.id}`} className={styles.productLink} >
                                 <h3>{item.name}</h3>
+                                </Link>
                                 <p>Variation: {item.variation}</p>
                                 <div className={styles.quantityWrapper}>
                                     <label htmlFor={`quantity-${item.id}-${item.variation}`}>Quantity:</label>

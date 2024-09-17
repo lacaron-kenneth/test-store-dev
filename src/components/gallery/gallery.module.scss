@@ -1,16 +1,32 @@
 .gallery {
-  display: flex;
-  flex-wrap: wrap; /* Allow wrapping to the next line */
-  gap: 16px;
-  justify-content: space-between; /* Center items horizontally */
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Responsive columns */
+  gap: 16px; /* Space between items */
   width: 100%;
   box-sizing: border-box;
-  max-width: 100%; /* Ensure it doesn’t overflow its container */
+  max-width: 100%; /* Prevent overflow */
 }
 
-@media (max-width: 800px) {
+/* Media Queries for different screen sizes */
+
+/* For larger screens */
+@media (min-width: 1024px) {
   .gallery {
-    justify-content: center; /* Adjust spacing for smaller screens */
+    grid-template-columns: repeat(3, 1fr); /* 3 columns on larger screens */
+  }
+}
+
+/* For medium screens (tablets) */
+@media (max-width: 1023px) {
+  .gallery {
+    grid-template-columns: repeat(2, 1fr); /* 2 columns on medium screens */
+  }
+}
+
+/* For smaller screens (mobile) */
+@media (max-width: 768px) {
+  .gallery {
+    grid-template-columns: 1fr; /* 1 column on small screens */
   }
 }
 
@@ -44,19 +60,18 @@
   line-height: 30px;
 }
 
-.selectButton option{
+.selectButton option {
   text-align: center;
 }
 
-
 @keyframes fadeUp {
   from {
-      opacity: 0;
-      transform: translateY(20px); /* Start slightly lower */
+    opacity: 0;
+    transform: translateY(20px); /* Start slightly lower */
   }
   to {
-      opacity: 1;
-      transform: translateY(0); /* End at the original position */
+    opacity: 1;
+    transform: translateY(0); /* End at the original position */
   }
 }
 

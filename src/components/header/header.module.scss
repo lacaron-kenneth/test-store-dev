@@ -5,7 +5,7 @@
   justify-content: space-between;
   overflow: visible;
   top: 0px;
-  padding:20px 60px 0 60px;
+  padding: 20px 60px 0 60px;
 }
 .header-section {
   padding: 10px;
@@ -15,7 +15,7 @@
 }
 .search {
   flex: 3;
-  
+
   @media (max-width: 800px) {
     display: none;
   }
@@ -52,4 +52,36 @@
   @media (max-width: 800px) {
     display: flex;
   }
+}
+
+.cartWrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.cartIcon {
+  font-size: 24px; /* Adjust the size of the icon */
+  cursor: pointer;
+  color: #333; /* Initial color */
+  transition: color 0.3s ease; /* Smooth transition on hover */
+
+  &:hover {
+    color: #007bff; /* Change color on hover */
+  }
+}
+
+.miniCartWrapper {
+  position: absolute;
+  top: 100%;
+  visibility: hidden;
+  right: 0;
+  &:not(:hover) {
+    transition-delay: 1s; // Delay matches the transition duration
+    transition: visibility 0.5s ease-out;
+  }
+}
+
+.cartWrapper:hover .miniCartWrapper {
+  visibility: visible;
+  transition: 0s; // Delay matches the transition duration
 }

@@ -5,8 +5,7 @@
   align-items: center;
   overflow: hidden;
   border-radius: 15px;
-  width: 100%;
-  max-width: 400px; /* Max width to keep cards consistent */
+  
   box-sizing: border-box;
   padding-top: var(--body-large);
   background-color: #fff; /* Background for visibility */
@@ -25,9 +24,6 @@
 .image-wrapper {
   width: 100%;
   height: 250px; /* Fixed height for uniformity */
-  display: flex;
-  justify-content: center;
-  align-items: center;
   overflow: hidden;
   background-color: #f4f4f4; /* Light background for the image wrapper */
   border-radius: 8px; /* Optional: Slight rounding */

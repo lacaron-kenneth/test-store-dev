@@ -6,6 +6,10 @@
   overflow: visible;
   top: 0px;
   padding: 20px 60px 0 60px;
+  position: sticky;
+  top: 0;
+  z-index: 9999;
+  background-color: white;
 }
 .header-section {
   padding: 10px;

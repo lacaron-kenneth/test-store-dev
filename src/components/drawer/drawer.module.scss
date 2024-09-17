@@ -57,3 +57,67 @@
     transform: translateX(0px);
   }
 }
+
+
+.miniCart {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+  
+  h3{
+    font-weight: bold;
+  }
+}
+
+.cartItems {
+  max-height: 50vh;
+  overflow-y: auto;
+}
+
+.cartItem {
+  display: flex;
+  margin-bottom: 10px;
+  gap: .5em;
+}
+
+.cartImage {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  margin-right: 10px;
+}
+
+.cartDetails {
+  display: flex;
+  flex-direction: column;
+  gap: .25em;
+  font-size: medium;
+}
+
+.cartSummary {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.cartLink {
+  color: blue;
+  text-decoration: none;
+  &:hover {
+      text-decoration: underline;
+  }
+}
+
+.price{
+  font-weight: 600;
+  color: #007bff; /* Change color on hover */
+}
+
+.total{
+  font-weight: 600;
+}
+
+.nav-text{
+  text-decoration: none;
+  color: black;
+}

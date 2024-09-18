@@ -4,15 +4,12 @@ import FigmaLogoCopy1Svg from '../../assets/figma  logo_copy1.svg';
 import ChevronRightSvg from '../../assets/chevron right.svg';
 import Homeimage3Jpeg from '../../assets/homeimage3.jpeg';
 import homePageStyles from '../home-page/home-page.module.scss';
+import { PromotionCarousel } from '../promotion-carousel/promotion-carousel';
 
 export interface HeroProps {
     className?: string;
 }
 
-/**
- * This component was created using Codux's Default new component template.
- * To create custom component templates, see https://help.codux.com/kb/en/article/kb16522
- */
 export const Hero = ({ className }: HeroProps) => {
     return (
         <div className={styles.hero}>
@@ -31,7 +28,7 @@ export const Hero = ({ className }: HeroProps) => {
                     </button>
                 </div>
             </div>
-            <img src={Homeimage3Jpeg} alt="" className={styles.image} />
+                <PromotionCarousel className={styles.carouselContainer} />
         </div>
     );
 };

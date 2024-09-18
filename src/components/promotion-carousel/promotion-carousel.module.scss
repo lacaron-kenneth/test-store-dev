@@ -1,0 +1,32 @@
+.carouselContainer {
+  max-width: 50vw;
+
+}
+
+.carousel {
+  .carouselImage {
+    height: 50vh;
+    width: 100%;
+    border-radius: 30px;
+    object-fit: cover;
+    flex: 1 0 0;
+  }
+
+  .caption {
+    text-align: center;
+    padding: 10px 0;
+
+    h3 {
+      margin: 0;
+      font-size: 1.2rem;
+    }
+
+    p {
+      margin: 0;
+      font-size: 1rem;
+      color: #007bff;
+    }
+  }
+}
+
+

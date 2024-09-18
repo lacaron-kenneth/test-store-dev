@@ -1,9 +1,8 @@
 .hero {
   display: flex;
-  justify-content: center;
-  align-items: center;
-  align-content: center;
+  flex-direction: row;
   flex-wrap: wrap;
+  align-items: center;
   gap: 32px;
 }
 
@@ -139,9 +138,9 @@
   }
 }
 
-.button:hover, .button2:hover {
-}
-
 .button, .button2{
   transition: 2s cubic-bezier(0.2, 0.8 0.2, 1);
+}
+
+.carouselContainer{
 }

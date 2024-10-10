@@ -9,6 +9,8 @@ import { ProductPage } from './components/product-page/product-page';
 import { Layout } from './components/layout/layout';
 import { CartProvider } from './context/CartContext';
 import { CartPage } from './components/cart-page/cart-page';
+import { CheckoutPage } from './components/checkout-page/checkout-page';
+import { ThankYouPage } from './components/thank-you-page/thank-you-page';
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 root.render(
     <React.StrictMode>
@@ -20,7 +22,9 @@ root.render(
                         <Route path="/browse" element={<BrowsePage />} />
                         <Route path="/search" element={<Search />} />
                         <Route path="/merch/:id" element={<ProductPage />}/>
-                        <Route path="/cart" element={<CartPage />}>
+                        <Route path="/cart" element={<CartPage />}/>
+                        <Route path="/thank-you" element={<ThankYouPage />}/>
+                        <Route path="/checkout" element={<CheckoutPage />}>
                             {' '}
                         </Route>
                     </Routes>

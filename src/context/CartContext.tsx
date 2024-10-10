@@ -15,6 +15,7 @@ interface CartContextProps {
     addToCart: (item: CartItem) => void;
     updateQuantity: (id: string, variation: string, quantity: number) => void;
     removeFromCart: (id: string, variation: string) => void;
+    clearCart: () => void; // Add the clearCart function to the context
 }
 
 const CartContext = createContext<CartContextProps | undefined>(undefined);
@@ -52,8 +53,12 @@ export const CartProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         setCart((prevCart) => prevCart.filter((item) => !(item.id === id && item.variation === variation)));
     };
 
+    const clearCart = () => {
+        setCart([]); // Clear the cart by resetting the state to an empty array
+    };
+
     return (
-        <CartContext.Provider value={{ cart, addToCart, updateQuantity, removeFromCart }}>
+        <CartContext.Provider value={{ cart, addToCart, updateQuantity, removeFromCart, clearCart }}>
             {children}
         </CartContext.Provider>
     );

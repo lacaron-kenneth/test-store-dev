@@ -41,7 +41,7 @@ export const CartPage = () => {
             const docRef = await addDoc(collection(db, 'orders'), orderDetails);
             clearCart(); // Clear cart after order is placed
             alert('Order placed successfully!');
-            navigate('/thank-you', { state: { orderId: docRef.id } });
+            navigate('/thank-you', { state: { orderId: docRef.id , cart: cart }  });
         } catch (error) {
             console.error('Error adding document: ', error);
             setErrorMessage('Failed to place order. Please try again later.');

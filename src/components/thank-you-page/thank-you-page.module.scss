@@ -1,2 +1,134 @@
-.root {
+.thankYou {
+  display: flex;
+  gap: 1.2em;
+  flex-direction: column;
+  flex-grow: 1;
+  padding: 2em;
+  text-align: center;
+  h2 {
+    font-size: xx-large;
+    font-weight: bold;
+  }
+  h3 {
+    font-size: large;
+  }
+
+  input {
+    text-align: left;
+    appearance: none;
+    padding: 4px 24px;
+    align-items: center;
+    gap: 8px;
+    border-radius: 99px;
+    border: 1px solid #888888;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 30px;
+  }
+
+  button {
+    text-align: center;
+    appearance: none;
+    padding: 12px 24px;
+    align-items: center;
+    gap: 8px;
+    border-radius: 99px;
+    border: 1px solid #888888;
+    background-color: black;
+    color: white;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 30px;
+  }
+}
+.cart {
+  display: flex;
+  gap: 1em;
+  flex-direction: column;
+  flex-grow: 2;
+}
+.cartItems {
+  display: flex;
+  flex-direction: column;
+  gap: 2em;
+}
+.cartItem {
+  display: flex;
+  flex-direction: row;
+  gap: 1em;
+}
+
+.image-wrapper {
+  width: 20%;
+  height: 200px; /* Fixed height for uniformity */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  background-color: #f4f4f4; /* Light background for the image wrapper */
+  border-radius: 8px; /* Optional: Slight rounding */
+}
+
+.cartImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Ensure the image covers the container */
+  object-position: center;
+}
+
+.cartDetails {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
+  align-items: start;
+  justify-content: center;
+
+  h3 {
+    font-weight: bold;
+  }
+  .quantityWrapper {
+    font-weight: 500;
+    margin-top: 10px;
+    display: flex;
+    gap: 0.5em;
+    align-items: center;
+
+    input {
+      text-align: center;
+      appearance: none;
+      padding: 4px 4px;
+      align-items: center;
+      gap: 8px;
+      border-radius: 99px;
+      border: 1px solid #888888;
+      font-size: 14px;
+      font-style: normal;
+      font-weight: 500;
+    }
+  }
+  button {
+    text-align: center;
+    appearance: none;
+    display: flex;
+    padding: 4px 24px;
+    align-items: center;
+    gap: 8px;
+    border-radius: 99px;
+    border: 1px solid #888888;
+    background-color: black;
+    color: white;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 30px;
+    margin-top: 10px;
+  }
+
+  .price {
+    margin-top: 10px;
+    font-weight: bold;
+    font-size: medium;
+  }
 }

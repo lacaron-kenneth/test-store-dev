@@ -36,9 +36,14 @@ export const PromotionCarousel = ({ className }: PromotionCarouselProps) => {
 
     return (
         <div className={styles.carouselContainer}>
+            
             <Swiper
+                navigation={{
+                    nextEl: '.custom-next',
+                    prevEl: '.custom-prev',
+                }}
                 modules={[Autoplay, Pagination, Navigation]}
-                spaceBetween={30}
+                spaceBetween={50}
                 centeredSlides={true}
                 autoplay={{
                     delay: 3000,
@@ -46,10 +51,11 @@ export const PromotionCarousel = ({ className }: PromotionCarouselProps) => {
                     pauseOnMouseEnter: true, // This will pause autoplay on hover
                 }}
                 pagination={{ clickable: true }}
-                navigation={true}
                 loop={true}
                 className={styles.carousel}
             >
+                <div className="swiper-button-prev custom-prev"></div>
+                <div className="swiper-button-next custom-next"></div>
                 {exclusiveProducts.map((product, index) => (
                     <SwiperSlide key={index}>
                         <img

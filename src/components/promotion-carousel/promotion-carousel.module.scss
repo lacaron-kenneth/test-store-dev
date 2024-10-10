@@ -27,6 +27,41 @@
       color: #007bff;
     }
   }
+
+
+
 }
 
 
+
+  
+.custom-prev, .custom-next {
+  background-color: red;
+  width: 40px;
+  height: 40px;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  cursor: pointer;
+}
+
+.custom-prev {
+  left: 10px;
+}
+
+.custom-next {
+  right: 10px;
+}
+
+.custom-prev::after, .custom-next::after {
+  content: '';
+  display: inline-block;
+  border-style: solid;
+  border-width: 8px 10px 8px 0;
+  border-color: transparent red transparent transparent;
+}
+.custom-next::after {
+  border-width: 8px 0 8px 10px;
+  border-color: transparent transparent transparent red;
+}

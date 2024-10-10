@@ -19,7 +19,6 @@ export const ThankYouPage = () => {
                     <p>Your cart is empty.</p>
                 ) : (
                     <div className={styles.cartItems}>
-                        @ts-ignore
                         {cart.map((item) => (
                             <div key={item.id + item.variation} className={styles.cartItem}>
                                 <div className={styles['image-wrapper']}>

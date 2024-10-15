@@ -1,21 +1,22 @@
-// src/components/login/Login.tsx
 import { useAuth } from '../../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 
 export const Login = () => {
-  const { loginWithGoogle, currentUser, isAdmin } = useAuth();
+  const { loginWithGoogle, currentUser, isAdmin, loading } = useAuth();
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (currentUser) {
-      if (isAdmin) {
-        navigate('/admin-dashboard');
-      } else {
-        navigate('/');
+    if (!loading) {  // Only navigate after loading is complete
+      if (currentUser) {
+        if (isAdmin) {
+          navigate('/admin-dashboard');
+        } else {
+          navigate('/');
+        }
       }
     }
-  }, [currentUser, isAdmin, navigate]);
+  }, [currentUser, isAdmin, loading, navigate]);
 
   return (
     <div>

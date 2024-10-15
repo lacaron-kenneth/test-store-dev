@@ -1,7 +1,7 @@
-// src/firebase.ts (or wherever your firebase.ts file is located)
-
-import { initializeApp } from "firebase/app";
-import { getFirestore } from "firebase/firestore";
+// src/firebase.ts
+import { initializeApp } from 'firebase/app';
+import { getAuth, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
+import { getFirestore } from 'firebase/firestore';
 
 // Firebase configuration using environment variables
 const firebaseConfig = {
@@ -16,4 +16,11 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
+export const auth = getAuth(app);
 export const db = getFirestore(app);
+
+// Function to handle Google login
+export const loginWithGoogle = async (): Promise<void> => {
+  const provider = new GoogleAuthProvider();
+  await signInWithPopup(auth, provider);
+};

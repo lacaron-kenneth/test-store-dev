@@ -1,37 +1,44 @@
-import styles from './App.module.scss';
 import { BrowsePage } from './components/browse-page/browse-page';
 import { HomePage } from './components/home-page/home-page';
 import { Routes, Route } from 'react-router-dom';
-import { MemoryRouter } from 'react-router-dom';
-import { Search } from './components/search/search';
-import { ProductPage } from './components/product-page/product-page';
 import { Layout } from './components/layout/layout';
 import { CartProvider } from './context/CartContext';
 import { CartPage } from './components/cart-page/cart-page';
 import { CheckoutPage } from './components/checkout-page/checkout-page';
 import { ThankYouPage } from './components/thank-you-page/thank-you-page';
+import { AdminDashboard } from './components/admin-dashboard/admin-dashboard';
+import { Login } from './components/login/login';
+import { PrivateRoute } from './routes/PrivateRoute';
+import { BrowserRouter as Router } from 'react-router-dom';
+import { AuthProvider } from './context/AuthContext';
 
 function App() {
     return (
-        <div className={styles.App}>
-            <MemoryRouter>
-                <CartProvider>
-                    <Layout>
-                        <Routes>
-                            <Route path="/" element={<HomePage />}></Route>
-                            <Route path="/browse" element={<BrowsePage />}></Route>
-                            <Route path="/search" element={<Search />}></Route>
-                            <Route path="/merch/:id" element={<ProductPage />}></Route>
-                            <Route path="/checkout" element={<CheckoutPage />}></Route>
-                            <Route path="/thank-you" element={<ThankYouPage />}></Route>
-                            <Route path="/cart" element={<CartPage />}></Route>
-                        </Routes>
-                        <HomePage />
-                    </Layout>
-                </CartProvider>
-            </MemoryRouter>
-        </div>
+      <AuthProvider>
+        <CartProvider>
+          <Router>
+            <Layout>
+              <Routes>
+                <Route path="/login" element={<Login />} />
+                <Route
+                  path="/admin-dashboard"
+                  element={
+                    <PrivateRoute adminOnly>
+                      <AdminDashboard />
+                    </PrivateRoute>
+                  }
+                />
+                <Route path="/" element={<HomePage />} />
+                <Route path="/browse" element={<BrowsePage />} />
+                <Route path="/cart" element={<CartPage />} />
+                <Route path="/checkout" element={<CheckoutPage />} />
+                <Route path="/thank-you" element={<ThankYouPage />} />
+              </Routes>
+            </Layout>
+          </Router>
+        </CartProvider>
+      </AuthProvider>
     );
-}
-
-export default App;
+  }
+  
+  export default App;

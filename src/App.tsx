@@ -11,6 +11,7 @@ import { Login } from './components/login/login';
 import { PrivateRoute } from './routes/PrivateRoute';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
+import { AdminRoutes } from './routes/AdminRoutes';
 
 function App() {
     return (
@@ -33,6 +34,7 @@ function App() {
                 <Route path="/cart" element={<CartPage />} />
                 <Route path="/checkout" element={<CheckoutPage />} />
                 <Route path="/thank-you" element={<ThankYouPage />} />
+                <Route path="admin-dashboard/*" element={<AdminRoutes />} /> {/* Nested routes */}
               </Routes>
             </Layout>
           </Router>

@@ -1,7 +1,7 @@
 // src/firebase.ts
 import { initializeApp } from 'firebase/app';
 import { getAuth, GoogleAuthProvider, signInWithPopup, signOut } from 'firebase/auth';
-import { getFirestore } from 'firebase/firestore';
+import { getDoc, getFirestore } from 'firebase/firestore';
 import { collection, getDocs, query, where, updateDoc, doc } from 'firebase/firestore';
 
 // Firebase configuration using environment variables
@@ -58,7 +58,7 @@ export const updateOrderStatus = async (orderId: string, status: string) => {
   await updateDoc(orderDoc, { status });
 };
 
-interface Order {
+export interface Order {
   id: string;
   contact: string;
   email: string;
@@ -75,3 +75,27 @@ interface Order {
   status: string; // Optional or required based on how it's set up in Firestore
   total: number;  // Assuming total is calculated from items
 }
+
+// Add this to your firebase.ts
+export const getOrderById = async (orderId: string): Promise<Order | null> => {
+  const orderDoc = doc(db, 'orders', orderId);
+  const orderSnapshot = await getDoc(orderDoc);
+
+  if (orderSnapshot.exists()) {
+    const data = orderSnapshot.data();
+    const total = data.items.reduce((acc: number, item: { price: number; quantity: number }) => acc + item.price * item.quantity, 0);
+    
+    return {
+      id: orderSnapshot.id,
+      contact: data.contact || '',
+      email: data.email || '',
+      items: data.items || [],
+      name: data.name || '',
+      timestamp: data.timestamp || null,
+      status: data.status || 'pending',
+      total,
+    };
+  } else {
+    return null;
+  }
+};

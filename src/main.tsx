@@ -15,6 +15,7 @@ import { AdminDashboard } from './components/admin-dashboard/admin-dashboard';
 import { Login } from './components/login/login';
 import { PrivateRoute } from './routes/PrivateRoute';
 import { AuthProvider } from './context/AuthContext';
+import { AdminRoutes } from './routes/AdminRoutes';
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 root.render(
     <React.StrictMode>
@@ -42,6 +43,7 @@ root.render(
                         <Route path="/cart" element={<CartPage />} />
                         <Route path="/thank-you" element={<ThankYouPage />} />
                         <Route path="/checkout" element={<CheckoutPage />}></Route>
+                        <Route path="admin-dashboard/*" element={<AdminRoutes />} /> {/* Nested routes */}
                     </Routes>
                 </Layout>
             </CartProvider>

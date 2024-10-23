@@ -35,7 +35,7 @@ export const ThankYouPage = () => {
                                     <p>Variation: {item.variation}</p>
                                     <div className={styles.quantityWrapper}>
                                         <label htmlFor={`quantity-${item.id}-${item.variation}`}>
-                                            Quantity:
+                                            Quantity: {item.quantity}
                                         </label>
                                     </div>
                                     <p className={styles.price}>Price: ${item.price}</p>

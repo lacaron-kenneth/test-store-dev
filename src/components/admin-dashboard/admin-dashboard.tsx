@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { OrderTable } from '../order/order-table';
 import { fetchOrders, updateOrderStatus } from '../../firebase'; // Fetch orders from firebase.ts
 import { Order } from '../../firebase'; // Import the Order type
+import styles from './admin-dashboard.module.scss';
 
 export const AdminDashboard: React.FC = () => {
   const [orders, setOrders] = useState<Order[]>([]);
@@ -47,7 +48,7 @@ export const AdminDashboard: React.FC = () => {
   }, [searchQuery, orders]);
 
   return (
-    <div>
+    <div className={styles.dashboard}>
       <h1>Admin Dashboard</h1>
       
       {/* Search bar */}

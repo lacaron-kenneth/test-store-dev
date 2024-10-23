@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Order } from '../../types'; // Import the type for Order
+import styles from './order-table.module.css';
 
 interface OrderTableProps {
     orders: Order[];
@@ -26,10 +27,15 @@ export const OrderTable: React.FC<OrderTableProps> = ({ orders, updateOrderStatu
     );
 
     return (
-        <div>
-            <div>
+        <div className={styles.orders}>
+            <div className={styles.filter}>
                 <label htmlFor="filter">Filter Orders:</label>
-                <select id="filter" value={filter} onChange={handleFilterChange}>
+                <select
+                    id="filter"
+                    value={filter}
+                    onChange={handleFilterChange}
+                    className={styles.categorySelect}
+                >
                     <option value="all">All</option>
                     <option value="approved">Approved</option>
                     <option value="in delivery">In Delivery</option>
@@ -37,43 +43,46 @@ export const OrderTable: React.FC<OrderTableProps> = ({ orders, updateOrderStatu
                     <option value="canceled">Canceled</option>
                 </select>
             </div>
-
-            <table>
-                <thead>
-                    <tr>
-                        <th>Order ID</th>
-                        <th>Customer Name</th>
-                        <th>Status</th>
-                        <th>Total</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {paginatedOrders.map((order) => (
-                        <tr key={order.id}>
-                            <td>
-                                <Link to={`order/${order.id}`}>{order.id}</Link>
-                            </td>
-                            <td>{order.email}</td>
-                            <td>{order.status}</td>
-                            <td>${order.total}</td>
-                            <td>
-                                <select
-                                    title="filter"
-                                    value={order.status}
-                                    onChange={(e) => updateOrderStatus(order.id, e.target.value)}
-                                >
-                                    <option value="approved">Approved</option>
-                                    <option value="in delivery">In Delivery</option>
-                                    <option value="finished">Finished</option>
-                                    <option value="canceled">Canceled</option>
-                                </select>
-                            </td>
+            <div className={styles.tablewrapper}>
+                <table className={styles.f1table}>
+                    <thead>
+                        <tr>
+                            <th>Order ID</th>
+                            <th>Customer Name</th>
+                            <th>Status</th>
+                            <th>Total</th>
+                            <th>Actions</th>
                         </tr>
-                    ))}
-                </tbody>
-            </table>
-
+                    </thead>
+                    <tbody>
+                        {paginatedOrders.map((order) => (
+                            <tr key={order.id}>
+                                <td>
+                                    <Link to={`order/${order.id}`}>{order.id}</Link>
+                                </td>
+                                <td>{order.email}</td>
+                                <td>{order.status}</td>
+                                <td>${order.total}</td>
+                                <td>
+                                    <select
+                                        title="filter"
+                                        className={styles.categorySelect}
+                                        value={order.status}
+                                        onChange={(e) =>
+                                            updateOrderStatus(order.id, e.target.value)
+                                        }
+                                    >
+                                        <option value="approved">Approved</option>
+                                        <option value="in delivery">In Delivery</option>
+                                        <option value="finished">Finished</option>
+                                        <option value="canceled">Canceled</option>
+                                    </select>
+                                </td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            </div>
             {/* Pagination */}
             <div>
                 {Array.from({ length: Math.ceil(filteredOrders.length / itemsPerPage) }, (_, i) => (

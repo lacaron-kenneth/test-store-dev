@@ -6,6 +6,11 @@ import { Link } from 'react-router-dom';
 export const ThankYouPage = () => {
     const location = useLocation();
     const { orderId, cart } = location.state || {};
+
+    // Calculate the total price of the items in the cart
+    const total = cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
+
+
     return (
         <div className={styles.thankYou}>
             <h1>Thank you for your order. We will get in touch with you via email</h1>
@@ -19,6 +24,8 @@ export const ThankYouPage = () => {
                     <p>Your cart is empty.</p>
                 ) : (
                     <div className={styles.cartItems}>
+                        <h2>Total: ${total.toFixed(2)}</h2> {/* Display the total price */}
+
                         {cart.map((item) => (
                             <div key={item.id + item.variation} className={styles.cartItem}>
                                 <div className={styles['image-wrapper']}>
@@ -30,7 +37,7 @@ export const ThankYouPage = () => {
                                 </div>
                                 <div className={styles.cartDetails}>
                                     {/* <Link to={`/merch/${item.id}`} className={styles.productLink}> */}
-                                        <h3>{item.name}</h3>
+                                    <h3>{item.name}</h3>
                                     {/* </Link> */}
                                     <p>Variation: {item.variation}</p>
                                     <div className={styles.quantityWrapper}>

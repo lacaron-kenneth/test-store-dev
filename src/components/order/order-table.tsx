@@ -2,6 +2,12 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Order } from '../../types'; // Import the type for Order
 import styles from './order-table.module.css';
+import { Timestamp } from 'firebase/firestore';
+
+// Helper function to format Firestore Timestamps to readable dates and times
+const formatTimestamp = (timestamp: Timestamp | null) => {
+    return timestamp ? timestamp.toDate().toLocaleString() : 'N/A'; // Include both date and time
+};
 
 interface OrderTableProps {
     orders: Order[];
@@ -9,7 +15,7 @@ interface OrderTableProps {
 }
 
 export const OrderTable: React.FC<OrderTableProps> = ({ orders, updateOrderStatus }) => {
-    const [filter, setFilter] = useState<string>('all');
+    const [filter, setFilter] = useState<string>('pending');
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 50;
 
@@ -36,21 +42,29 @@ export const OrderTable: React.FC<OrderTableProps> = ({ orders, updateOrderStatu
                     onChange={handleFilterChange}
                     className={styles.categorySelect}
                 >
-                    <option value="all">All</option>
+                    <option value="pending">Pending</option>
                     <option value="approved">Approved</option>
-                    <option value="in delivery">In Delivery</option>
+                    <option value="delivery">In Delivery</option>
                     <option value="finished">Finished</option>
+                    <option value="delayed">Delayed</option>
                     <option value="canceled">Canceled</option>
+                    <option value="all">All</option>
                 </select>
             </div>
+
             <div className={styles.tablewrapper}>
                 <table className={styles.f1table}>
                     <thead>
                         <tr>
                             <th>Order ID</th>
                             <th>Customer Name</th>
-                            <th>Status</th>
                             <th>Total</th>
+                            <th>Order Placed</th>
+                            <th>Approved</th>
+                            <th>In Delivery</th>
+                            <th>Finished</th>
+                            <th>Canceled</th>
+                            <th>Status</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
@@ -61,8 +75,13 @@ export const OrderTable: React.FC<OrderTableProps> = ({ orders, updateOrderStatu
                                     <Link to={`order/${order.id}`}>{order.id}</Link>
                                 </td>
                                 <td>{order.email}</td>
-                                <td>{order.status}</td>
                                 <td>${order.total}</td>
+                                <td>{formatTimestamp(order.timestamp)}</td>
+                                <td>{formatTimestamp(order.statusTimestamps?.approved)}</td>
+                                <td>{formatTimestamp(order.statusTimestamps?.delivery)}</td>
+                                <td>{formatTimestamp(order.statusTimestamps?.finished)}</td>
+                                <td>{formatTimestamp(order.statusTimestamps?.canceled)}</td>
+                                <td className={styles.status}>{order.status}</td>
                                 <td>
                                     <select
                                         title="filter"
@@ -72,9 +91,11 @@ export const OrderTable: React.FC<OrderTableProps> = ({ orders, updateOrderStatu
                                             updateOrderStatus(order.id, e.target.value)
                                         }
                                     >
+                                        <option value="">Select Action</option>
                                         <option value="approved">Approved</option>
-                                        <option value="in delivery">In Delivery</option>
+                                        <option value="delivery">In Delivery</option>
                                         <option value="finished">Finished</option>
+                                        <option value="delayed">Delayed</option>
                                         <option value="canceled">Canceled</option>
                                     </select>
                                 </td>
@@ -83,6 +104,7 @@ export const OrderTable: React.FC<OrderTableProps> = ({ orders, updateOrderStatu
                     </tbody>
                 </table>
             </div>
+
             {/* Pagination */}
             <div>
                 {Array.from({ length: Math.ceil(filteredOrders.length / itemsPerPage) }, (_, i) => (

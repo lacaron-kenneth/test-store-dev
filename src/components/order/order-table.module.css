@@ -19,6 +19,11 @@
     align-items: center;
 }
 
+.status{
+    font-weight: bold;
+    text-transform: capitalize;
+    
+}
 
 /* Table Styles */
 

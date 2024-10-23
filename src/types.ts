@@ -1,4 +1,5 @@
 export interface Order {
+  statusTimestamps: any;
   id: string;
   contact: string;
   email: string;

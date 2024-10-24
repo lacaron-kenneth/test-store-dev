@@ -1,8 +1,9 @@
 // src/firebase.ts
 import { initializeApp } from 'firebase/app';
 import { getAuth, GoogleAuthProvider, signInWithPopup, signOut } from 'firebase/auth';
-import { getDoc, getFirestore } from 'firebase/firestore';
-import { collection, getDocs, query, where, updateDoc, doc , serverTimestamp} from 'firebase/firestore';
+import { addDoc, getDoc, getFirestore, updateDoc, doc, serverTimestamp } from 'firebase/firestore';
+import { collection, getDocs } from 'firebase/firestore';
+
 // Firebase configuration using environment variables
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
@@ -28,6 +29,7 @@ export const loginWithGoogle = async (): Promise<void> => {
 export const logout = async (): Promise<void> => {
   await signOut(auth);
 };
+
 // Fetch all orders from Firestore
 export const fetchOrders = async (): Promise<Order[]> => {
   const ordersRef = collection(db, 'orders');
@@ -95,6 +97,7 @@ export const getOrderById = async (orderId: string): Promise<Order | null> => {
   }
 };
 
+// Define Order interface
 export interface Order {
   id: string;
   contact: string;

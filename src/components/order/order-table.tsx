@@ -65,6 +65,7 @@ export const OrderTable: React.FC<OrderTableProps> = ({ orders, updateOrderStatu
                             <th>Finished</th>
                             <th>Canceled</th>
                             <th>Status</th>
+                            <th>Logs</th> {/* Add Logs Column */}
                             <th>Actions</th>
                         </tr>
                     </thead>
@@ -82,6 +83,9 @@ export const OrderTable: React.FC<OrderTableProps> = ({ orders, updateOrderStatu
                                 <td>{formatTimestamp(order.statusTimestamps?.finished)}</td>
                                 <td>{formatTimestamp(order.statusTimestamps?.canceled)}</td>
                                 <td className={styles.status}>{order.status}</td>
+                                <td>
+                                    <Link to={`order/${order.id}/logs`}>View Logs</Link> {/* Link to logs */}
+                                </td>
                                 <td>
                                     <select
                                         title="filter"

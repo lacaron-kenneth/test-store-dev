@@ -40,6 +40,7 @@ root.render(
                         <Route path="/browse" element={<BrowsePage />} />
                         <Route path="/search" element={<Search />} />
                         <Route path="/merch/:id" element={<ProductPage />} />
+                        
                         <Route path="/cart" element={<CartPage />} />
                         <Route path="/thank-you" element={<ThankYouPage />} />
                         <Route path="/checkout" element={<CheckoutPage />}></Route>

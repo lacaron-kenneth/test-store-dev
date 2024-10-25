@@ -2,12 +2,14 @@ import React, { useState, useEffect } from 'react';
 import { OrderTable } from '../order/order-table';
 import { fetchOrders, updateOrderStatus } from '../../firebase'; // Fetch orders from firebase.ts
 import { Order } from '../../firebase'; // Import the Order type
+import { getAuth, onAuthStateChanged } from 'firebase/auth'; // Import Firebase Auth
 import styles from './admin-dashboard.module.scss';
 
 export const AdminDashboard: React.FC = () => {
     const [orders, setOrders] = useState<Order[]>([]);
     const [loading, setLoading] = useState(true); // Loading state for fetching orders
     const [error, setError] = useState<string | null>(null); // Error state
+    const [userEmail, setUserEmail] = useState<string | null>(null); // State to hold current user's email
 
     // Fetch orders on component mount
     useEffect(() => {
@@ -26,12 +28,29 @@ export const AdminDashboard: React.FC = () => {
         loadOrders();
     }, []);
 
+    // Get the currently logged-in user’s email
+    useEffect(() => {
+        const auth = getAuth();
+        const unsubscribe = onAuthStateChanged(auth, (user) => {
+            if (user) {
+                setUserEmail(user.email); // Set the user's email
+            } else {
+                setUserEmail(null);
+            }
+        });
+        return () => unsubscribe();
+    }, []);
+
     const handleUpdateOrderStatus = async (id: string, newStatus: string) => {
         try {
-            await updateOrderStatus(id, newStatus, "admin@example.com"); // Adding placeholder for admin email
-            // Fetch the updated orders
-            const updatedOrders = await fetchOrders();
-            setOrders(updatedOrders); // Update state with fetched orders
+            if (userEmail) {
+                await updateOrderStatus(id, newStatus, userEmail); // Use current user email
+                // Fetch the updated orders
+                const updatedOrders = await fetchOrders();
+                setOrders(updatedOrders); // Update state with fetched orders
+            } else {
+                console.error('User email is not available.');
+            }
         } catch (err) {
             console.error('Error updating order status:', err);
             setError('Failed to update order status. Please try again later.');
@@ -62,6 +81,7 @@ export const AdminDashboard: React.FC = () => {
     return (
         <div className={styles.dashboard}>
             <h1>Admin Dashboard</h1>
+            {userEmail && <p>Welcome, {userEmail}</p>}
             
             {/* Search bar */}
             <input

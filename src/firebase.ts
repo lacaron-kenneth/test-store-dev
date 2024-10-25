@@ -57,15 +57,23 @@ export const fetchOrders = async (): Promise<Order[]> => {
 
   return orderList;
 };
-
-// Update order status and timestamp
-export const updateOrderStatus = async (orderId: string, newStatus: string) => {
+// Update order status, timestamp, and save logs
+export const updateOrderStatus = async (orderId: string, newStatus: string, adminEmail: string) => {
   const orderDoc = doc(db, 'orders', orderId);
   const statusField = `statusTimestamps.${newStatus}`;
 
+  // Update the order status and timestamp
   await updateDoc(orderDoc, {
     status: newStatus,
     [statusField]: serverTimestamp(), // Update the timestamp for the new status
+  });
+
+  // Add log entry
+  const logsCollection = collection(orderDoc, 'logs');
+  await addDoc(logsCollection, {
+    adminEmail, // Email of the admin who made the change
+    change: `Status updated to ${newStatus}`,
+    timestamp: serverTimestamp(),
   });
 };
 

@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { collection, getDocs, doc } from 'firebase/firestore';
+import { collection, getDocs } from 'firebase/firestore';
 import { db } from '../../firebase';
+import { Timestamp } from 'firebase/firestore';
+import styles from './order-log.module.css';
 
 interface Log {
   adminEmail: string;
   change: string;
-  timestamp: any; // We will later convert this to a Date
+  timestamp: string; // Convert to string format
 }
 
 export const OrderLogs: React.FC = () => {
@@ -14,24 +16,30 @@ export const OrderLogs: React.FC = () => {
   const [logs, setLogs] = useState<Log[]>([]);
 
   useEffect(() => {
-    if (orderId) { // Ensure orderId is defined
-      const fetchLogs = async () => {
-        const orderDocRef = doc(db, 'orders', orderId); // Use orderId safely
-        const logsRef = collection(orderDocRef, 'logs');
+    const fetchLogs = async () => {
+      if (orderId) {
+        const logsRef = collection(db, 'orders', orderId, 'logs');
         const logSnapshot = await getDocs(logsRef);
 
-        const logsData = logSnapshot.docs.map((doc) => doc.data() as Log);
+        const logsData = logSnapshot.docs.map((doc) => {
+          const data = doc.data();
+          return {
+            ...data,
+            timestamp: (data.timestamp as Timestamp).toDate().toLocaleString(), // Format timestamp
+          };
+        }) as Log[];
+        
         setLogs(logsData);
-      };
+      }
+    };
 
-      fetchLogs();
-    }
+    fetchLogs();
   }, [orderId]);
 
   return (
-    <div>
-      <h2>Order Logs for Order {orderId}</h2>
-      <table>
+    <div className={styles.tablewrapper}>
+      <h1>Order Logs for Order: {orderId}</h1>
+      <table className={styles.f1table}>
         <thead>
           <tr>
             <th>Admin Email</th>
@@ -44,7 +52,7 @@ export const OrderLogs: React.FC = () => {
             <tr key={index}>
               <td>{log.adminEmail}</td>
               <td>{log.change}</td>
-              <td>{log.timestamp?.toDate().toLocaleString()}</td> {/* Convert Firestore Timestamp to JS Date */}
+              <td>{log.timestamp}</td>
             </tr>
           ))}
         </tbody>

@@ -28,7 +28,7 @@ export const AdminDashboard: React.FC = () => {
 
     const handleUpdateOrderStatus = async (id: string, newStatus: string) => {
         try {
-            await updateOrderStatus(id, newStatus);
+            await updateOrderStatus(id, newStatus, "admin@example.com"); // Adding placeholder for admin email
             // Fetch the updated orders
             const updatedOrders = await fetchOrders();
             setOrders(updatedOrders); // Update state with fetched orders

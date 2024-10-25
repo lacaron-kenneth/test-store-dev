@@ -73,11 +73,7 @@ export const OrderTable: React.FC<OrderTableProps> = ({ orders, updateOrderStatu
                         {paginatedOrders.map((order) => (
                             <tr key={order.id}>
                                 <td>
-                                    <Link to={`order/${order.id}`}
-                                    onClick={(e) => {
-                                        e.preventDefault(); // Prevents default link behavior
-                                        window.open(`/admin-dashboard/order/${order.id}`, '_blank'); // Opens in a new tab
-                                    }}>{order.id}</Link>
+                                    <Link to={`order/${order.id}`}>{order.id}</Link>
                                 </td>
                                 <td>{order.email}</td>
                                 <td>${order.total}</td>
@@ -92,7 +88,10 @@ export const OrderTable: React.FC<OrderTableProps> = ({ orders, updateOrderStatu
                                         to={`order/${order.id}/logs`}
                                         onClick={(e) => {
                                             e.preventDefault(); // Prevents default link behavior
-                                            window.open(`admin-dashboard/order/${order.id}/logs`, '_blank'); // Opens in a new tab
+                                            window.open(
+                                                `admin-dashboard/order/${order.id}/logs`,
+                                                '_blank'
+                                            ); // Opens in a new tab
                                         }}
                                     >
                                         View Logs

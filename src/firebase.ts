@@ -144,12 +144,13 @@ export const uploadImages = async (files: File[]): Promise<string[]> => {
   return await Promise.all(uploadPromises);
 };
 
-// Upload an image to Firebase Storage using Blob
-export const uploadImageBlob = async (file: Blob): Promise<string> => {
+// Upload an image to Firebase Storage using File
+export const uploadImageBlob = async (file: File): Promise<string> => {
   const storageRef = ref(storage, `product-images/${file.name}-${Date.now()}`);
   await uploadBytes(storageRef, file);
   return await getDownloadURL(storageRef);
-}
+};
+
 
 // Update order status, timestamp, and save logs
 export const updateOrderStatus = async (orderId: string, newStatus: string, adminEmail: string) => {

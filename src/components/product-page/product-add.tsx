@@ -70,6 +70,7 @@ export const ProductAdd = () => {
         <div>
           <label>Product Category:</label>
           <input
+          title='cat'
             type="text"
             value={productCategory}
             onChange={(e) => setProductCategory(e.target.value)}
@@ -84,6 +85,7 @@ export const ProductAdd = () => {
               <div>
                 <label>Name:</label>
                 <input
+                title='name'
                   type="text"
                   value={variation.name}
                   onChange={(e) => handleVariationChange(index, 'name', e.target.value)}
@@ -93,6 +95,7 @@ export const ProductAdd = () => {
               <div>
                 <label>Description:</label>
                 <textarea
+                title='desc'
                   value={variation.description}
                   onChange={(e) => handleVariationChange(index, 'description', e.target.value)}
                 />
@@ -100,6 +103,7 @@ export const ProductAdd = () => {
               <div>
                 <label>Price:</label>
                 <input
+                title='price'
                   type="number"
                   value={variation.price || ''}
                   onChange={(e) => handleVariationChange(index, 'price', e.target.value)}
@@ -108,6 +112,7 @@ export const ProductAdd = () => {
               <div>
                 <label>Quantity:</label>
                 <input
+                title='quantity'
                   type="number"
                   value={variation.quantity}
                   onChange={(e) => handleVariationChange(index, 'quantity', e.target.value)}
@@ -117,6 +122,7 @@ export const ProductAdd = () => {
               <div>
                 <label>Images:</label>
                 <input
+                title='images'
                   type="file"
                   multiple
                   onChange={(e) => handleImageChange(index, e)}

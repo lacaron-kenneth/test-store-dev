@@ -36,6 +36,7 @@ export const ProductDetail = () => {
 
   const handleUpdateProduct = async () => {
     if (!product) return;
+  
     const updatedVariations = await Promise.all(
       product.variations.map(async (variation, index) => {
         const imageUrls = imageFiles[index].length
@@ -44,19 +45,26 @@ export const ProductDetail = () => {
         return { ...variation, images: imageUrls };
       })
     );
+  
     const updatedProduct: Product = {
       ...product,
       variations: updatedVariations,
     };
-    try {
-      await updateProduct(productId, updatedProduct);
-      alert('Product updated successfully!');
-      setImageFiles([]); // Clear images after updating
-    } catch (error) {
-      console.error('Error updating product:', error);
-      alert('Failed to update product.');
+  
+    if (productId) { // Ensure productId is defined
+      try {
+        await updateProduct(productId, updatedProduct);
+        alert('Product updated successfully!');
+        setImageFiles([]); // Clear images after updating
+      } catch (error) {
+        console.error('Error updating product:', error);
+        alert('Failed to update product.');
+      }
+    } else {
+      console.error('Product ID is undefined');
     }
   };
+  
 
   const handleFieldChange = (field: string, value: any) => {
     if (product) {
@@ -98,6 +106,7 @@ export const ProductDetail = () => {
         <div>
           <label>Product Category:</label>
           <input
+          title='cat'
             type="text"
             value={product?.productCategory || ''}
             onChange={(e) => handleFieldChange('productCategory', e.target.value)}
@@ -112,6 +121,7 @@ export const ProductDetail = () => {
               <div>
                 <label>Name:</label>
                 <input
+                title='name'
                   type="text"
                   value={variation.name}
                   onChange={(e) => handleVariationChange(index, 'name', e.target.value)}
@@ -121,6 +131,7 @@ export const ProductDetail = () => {
               <div>
                 <label>Description:</label>
                 <textarea
+                title='desc'
                   value={variation.description || ''}
                   onChange={(e) => handleVariationChange(index, 'description', e.target.value)}
                 />
@@ -128,6 +139,7 @@ export const ProductDetail = () => {
               <div>
                 <label>Price:</label>
                 <input
+                title='price'
                   type="number"
                   value={variation.price || ''}
                   onChange={(e) => handleVariationChange(index, 'price', e.target.value)}
@@ -136,6 +148,7 @@ export const ProductDetail = () => {
               <div>
                 <label>Quantity:</label>
                 <input
+                title='quantity'
                   type="number"
                   value={variation.quantity}
                   onChange={(e) => handleVariationChange(index, 'quantity', e.target.value)}
@@ -145,6 +158,7 @@ export const ProductDetail = () => {
               <div>
                 <label>Images:</label>
                 <input
+                title='images'
                   type="file"
                   multiple
                   onChange={(e) => handleImageChange(index, e)}

@@ -80,7 +80,7 @@ export const ProductPage = () => {
   return (
     <div className={styles.merch}>
       <div className={styles['image-wrapper']}>
-        <img src={loadedImage} className={styles.img} />
+        <img title='img' src={loadedImage} className={styles.img} />
       </div>
       <div className={styles.content}>
         <h1 className={styles.name}>{product.variations.find(variation => variation.name === selectedVariation)?.name || ''}</h1>

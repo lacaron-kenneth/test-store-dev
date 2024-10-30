@@ -25,24 +25,21 @@ function App() {
               <Routes>
                         <Route path="/login" element={<Login />} />
                         <Route
-                            path="/admin-dashboard"
+                            path="admin-dashboard/*"
                             element={
                                 <PrivateRoute adminOnly>
-                                    <AdminDashboard />
+                                    <AdminRoutes />
                                 </PrivateRoute>
                             }
                         />
                         <Route path="/login" element={<Login />} />
-                        <Route path="/admin-dashboard" element={<AdminDashboard />} />
                         <Route path="/" element={<HomePage />} />
                         <Route path="/browse" element={<BrowsePage />} />
                         <Route path="/search" element={<Search />} />
                         <Route path="/merch/:id" element={<ProductPage />} />
-                        
                         <Route path="/cart" element={<CartPage />} />
                         <Route path="/thank-you" element={<ThankYouPage />} />
                         <Route path="/checkout" element={<CheckoutPage />}></Route>
-                        <Route path="admin-dashboard/*" element={<AdminRoutes />} /> {/* Nested routes */}
                     </Routes>
               </Routes>
             </Layout>

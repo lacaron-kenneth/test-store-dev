@@ -1,133 +1,121 @@
+import React, { useEffect, useState } from 'react';
 import classNames from 'classnames';
 import styles from './gallery.module.scss';
 import { Merch } from '../merch/merch';
-// @ts-ignore
-import productData from '../../data/data_merch.jsx';
-import { useState } from 'react';
-import merchStyles from '../merch/merch.module.scss';
 import { Link } from 'react-router-dom';
+import { fetchProducts } from '../../firebase';
+import { Product } from '../../types/product'; // Adjust the import path
 
 export interface GalleryProps {
-    className?: string;
-    products?: any[]; // Allow external products to be passed in as props
+  className?: string;
+  products?: Product[]; // Allow external products to be passed in as props
 }
 
-export const Gallery = ({ className, products = productData }: GalleryProps) => {
-    const [selectedCategory, setSelectedCategory] = useState<string>(''); // State for category filter
-    const [priceSort, setPriceSort] = useState<string>(''); // State for sorting by price
-    const [sortBy, setSortBy] = useState<string>('relevance'); // State for sorting by relevance or latest
+export const Gallery = ({ className, products = [] }: GalleryProps) => {
+  const [internalProducts, setInternalProducts] = useState<Product[]>([]);
+  const [selectedCategory, setSelectedCategory] = useState<string>(''); 
+  const [priceSort, setPriceSort] = useState<string>(''); 
+  const [sortBy, setSortBy] = useState<string>('relevance'); 
+  const [loading, setLoading] = useState(true);
 
-    // Function to sort products by price
-    const sortProductsByPrice = (products: any[]) => {
-        if (priceSort === 'priceHighToLow') {
-            return [...products].sort((a, b) => b.price - a.price);
-        }
-        if (priceSort === 'priceLowToHigh') {
-            return [...products].sort((a, b) => a.price - b.price);
-        }
-        return products; // No price sorting
+  useEffect(() => {
+    const loadProducts = async () => {
+      if (products.length > 0) {
+        setInternalProducts(products);  // Use passed products if available
+        setLoading(false);
+      } else if (internalProducts.length === 0) { // Only fetch if no internal products
+        setLoading(true);
+        const fetchedProducts = await fetchProducts();
+        setInternalProducts(fetchedProducts);
+        setLoading(false);
+      }
     };
+    loadProducts();
+  }, [products, internalProducts.length]);
 
-    // Function to sort products by relevance or latest
-    const sortProductsByOtherCriteria = (products: any[]) => {
-        if (sortBy === 'latest') {
-            // Sort by ID (Newer to Older)
-            return [...products].sort((a, b) => b.id - a.id);
-        }
-        if (sortBy === 'relevance') {
-            // Relevance can be custom logic, here it is just the default order
-            return products; // No sorting for relevance as an example
-        }
-        return products; // Default order
-    };
+  const sortProductsByPrice = (products: Product[]) => {
+    if (priceSort === 'priceHighToLow') {
+      return [...products].sort((a, b) => b.variations[0].price - a.variations[0].price);
+    }
+    if (priceSort === 'priceLowToHigh') {
+      return [...products].sort((a, b) => a.variations[0].price - b.variations[0].price);
+    }
+    return products;
+  };
 
-    // Handle category change
-    const handleCategoryChange = (category: string) => {
-        setSelectedCategory(category);
-    };
+  const sortProductsByOtherCriteria = (products: Product[]) => {
+    if (sortBy === 'latest') {
+      return [...products].sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime());
+    }
+    return products;
+  };
 
-    // Filter products by category
-    const filteredProducts = products.filter((product: any) => {
-        return selectedCategory ? product.productCategory === selectedCategory : true;
-    });
+  const handleCategoryChange = (category: string) => {
+    setSelectedCategory(category);
+  };
 
-    // First, sort filtered products by price, then by relevance/latest
-    let sortedProducts = sortProductsByPrice(filteredProducts);
-    sortedProducts = sortProductsByOtherCriteria(sortedProducts);
+  const filteredProducts = internalProducts.filter((product) => {
+    return selectedCategory ? product.productCategory === selectedCategory : true;
+  });
 
-    // Handle price sort change
-    const handlePriceSortChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-        setPriceSort(e.target.value);
-    };
+  let sortedProducts = sortProductsByPrice(filteredProducts);
+  sortedProducts = sortProductsByOtherCriteria(sortedProducts);
 
-    // Handle sort by relevance or latest change
-    const handleSortChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-        setSortBy(e.target.value);
-    };
+  const handlePriceSortChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setPriceSort(e.target.value);
+  };
 
-    return (
-        <div className={classNames(styles['product-grid'], className)}>
-            <div className={styles.filters}>
-                <h2 className={merchStyles.header1}>Filter by</h2>
+  const handleSortChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setSortBy(e.target.value);
+  };
 
-                {/* Category Filter */}
-                <select
-                    title="selectCategory"
-                    value={selectedCategory}
-                    onChange={(e) => setSelectedCategory(e.target.value)}
-                    name="selectCategory"
-                    className={styles.selectButton}
-                >
-                    <option value={''}>All Categories</option>
-                    <option value={'clothing'}>Clothing</option>
-                    <option value={'nonclothing'}>Accessories</option>
-                </select>
-
-                {/* Price Sort Filter */}
-                <select
-                    title="priceSort"
-                    value={priceSort}
-                    onChange={handlePriceSortChange}
-                    className={styles.selectButton}
-                >
-                    <option value="">Price</option>
-                    <option value="priceHighToLow">Price: High to Low</option>
-                    <option value="priceLowToHigh">Price: Low to High</option>
-                </select>
-
-                {/* Relevance or Latest Sort */}
-                {/* <select
-                    title="sort"
-                    value={sortBy}
-                    onChange={handleSortChange}
-                    className={styles.selectButton}
-                >
-                    <option value="relevance">Relevance</option>
-                    <option value="latest">Latest</option>
-                </select> */}
-            </div>
-
-            {/* Render the sorted and filtered products */}
-            <div className={styles.gallery}>
-                {sortedProducts.length === 0 && <h3>No Results Found</h3>}
-                {sortedProducts.map((product: any, index: any) => (
-                    <div
-                        key={product.id}
-                        className={styles['fade-up']}
-                        style={{ '--animation-delay': `${index * 0.2}s` } as React.CSSProperties} // Stagger delay
-                    >
-                        <Link to={`/merch/${product.id}`} className={styles.productLink}>
-                            <Merch
-                                key={product.id}
-                                image={product.imageThumbnail[0]} // Access the first function in the array
-                                name={product.name}
-                                description={product.description}
-                                price={product.price}
-                            />
-                        </Link>
-                    </div>
-                ))}
-            </div>
-        </div>
-    );
+  return (
+    <div className={classNames(styles['product-grid'], className)}>
+      <div className={styles.filters}>
+        <h2 className={styles.header1}>Filter by</h2>
+        <select
+          title="selectCategory"
+          value={selectedCategory}
+          onChange={(e) => setSelectedCategory(e.target.value)}
+          name="selectCategory"
+          className={styles.selectButton}
+        >
+          <option value={''}>All Categories</option>
+          <option value={'clothing'}>Clothing</option>
+          <option value={'nonclothing'}>Accessories</option>
+        </select>
+        <select
+          title="priceSort"
+          value={priceSort}
+          onChange={handlePriceSortChange}
+          className={styles.selectButton}
+        >
+          <option value="">Price</option>
+          <option value="priceHighToLow">Price: High to Low</option>
+          <option value="priceLowToHigh">Price: Low to High</option>
+        </select>
+      </div>
+      <div className={styles.gallery}>
+        {loading && <h3>Loading...</h3>}
+        {!loading && sortedProducts.length === 0 && <h3>No Results Found</h3>}
+        {sortedProducts.map((product: Product, index: number) => (
+          <div
+            key={product.id}
+            className={styles['fade-up']}
+            style={{ '--animation-delay': `${index * 0.2}s` } as React.CSSProperties}
+          >
+            <Link to={`/merch/${product.id}`} className={styles.productLink}>
+              <Merch
+                key={product.id}
+                image={product.variations[0].images[0]} // Access the first image of the first variation
+                name={product.variations[0].name} // Access the name of the first variation
+                description={product.variations[0].description || ''} // Access the description of the first variation
+                price={product.variations[0].price || 0} // Access the price of the first variation
+              />
+            </Link>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
 };

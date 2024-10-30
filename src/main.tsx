@@ -16,6 +16,10 @@ import { Login } from './components/login/login';
 import { PrivateRoute } from './routes/PrivateRoute';
 import { AuthProvider } from './context/AuthContext';
 import { AdminRoutes } from './routes/AdminRoutes';
+import { ProductDetailPage } from './components/product-page/product-detail-page';
+import { AdminProductPage } from './components/admin-dashboard/admin-product-page';
+import { OrderDetailsPage } from './components/order-details-page/order-details-page';
+import { OrderLogs } from './components/order-log/order-log';
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 root.render(
     <React.StrictMode>
@@ -27,24 +31,22 @@ root.render(
                     <Routes>
                         <Route path="/login" element={<Login />} />
                         <Route
-                            path="/admin-dashboard"
+                            path="admin-dashboard/*"
                             element={
                                 <PrivateRoute adminOnly>
-                                    <AdminDashboard />
+                                    <AdminRoutes />
                                 </PrivateRoute>
                             }
                         />
                         <Route path="/login" element={<Login />} />
-                        <Route path="/admin-dashboard" element={<AdminDashboard />} />
                         <Route path="/" element={<HomePage />} />
                         <Route path="/browse" element={<BrowsePage />} />
                         <Route path="/search" element={<Search />} />
                         <Route path="/merch/:id" element={<ProductPage />} />
-                        
+                       
                         <Route path="/cart" element={<CartPage />} />
                         <Route path="/thank-you" element={<ThankYouPage />} />
                         <Route path="/checkout" element={<CheckoutPage />}></Route>
-                        <Route path="admin-dashboard/*" element={<AdminRoutes />} /> {/* Nested routes */}
                     </Routes>
                 </Layout>
             </CartProvider>

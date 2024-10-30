@@ -6,57 +6,59 @@ import { Timestamp } from 'firebase/firestore';
 import styles from './order-log.module.css';
 
 interface Log {
-  adminEmail: string;
-  change: string;
-  timestamp: string; // Convert to string format
+    adminEmail: string;
+    change: string;
+    timestamp: string; // Convert to string format
 }
 
 export const OrderLogs: React.FC = () => {
-  const { orderId } = useParams<{ orderId: string }>();
-  const [logs, setLogs] = useState<Log[]>([]);
+    const { orderId } = useParams<{ orderId: string }>();
+    const [logs, setLogs] = useState<Log[]>([]);
 
-  useEffect(() => {
-    const fetchLogs = async () => {
-      if (orderId) {
-        const logsRef = collection(db, 'orders', orderId, 'logs');
-        const logSnapshot = await getDocs(logsRef);
+    useEffect(() => {
+        const fetchLogs = async () => {
+            if (orderId) {
+                const logsRef = collection(db, 'orders', orderId, 'logs');
+                const logSnapshot = await getDocs(logsRef);
 
-        const logsData = logSnapshot.docs.map((doc) => {
-          const data = doc.data();
-          return {
-            ...data,
-            timestamp: (data.timestamp as Timestamp).toDate().toLocaleString(), // Format timestamp
-          };
-        }) as Log[];
-        
-        setLogs(logsData);
-      }
-    };
+                const logsData = logSnapshot.docs.map((doc) => {
+                    const data = doc.data();
+                    return {
+                        ...data,
+                        timestamp: (data.timestamp as Timestamp).toDate().toLocaleString(), // Format timestamp
+                    };
+                }) as Log[];
 
-    fetchLogs();
-  }, [orderId]);
+                setLogs(logsData);
+            }
+        };
 
-  return (
-    <div className={styles.tablewrapper}>
-      <h1>Order Logs for Order: {orderId}</h1>
-      <table className={styles.f1table}>
-        <thead>
-          <tr>
-            <th>Admin Email</th>
-            <th>Change</th>
-            <th>Timestamp</th>
-          </tr>
-        </thead>
-        <tbody>
-          {logs.map((log, index) => (
-            <tr key={index}>
-              <td>{log.adminEmail}</td>
-              <td>{log.change}</td>
-              <td>{log.timestamp}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
-  );
+        fetchLogs();
+    }, [orderId]);
+
+    const sortedLogs = logs.sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime());
+
+    return (
+        <div className={styles.tablewrapper}>
+            <h1>Order Logs for Order: {orderId}</h1>
+            <table className={styles.f1table}>
+                <thead>
+                    <tr>
+                        <th>Admin Email</th>
+                        <th>Change</th>
+                        <th>Timestamp</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {sortedLogs.map((log, index) => (
+                        <tr key={index}>
+                            <td>{log.adminEmail}</td>
+                            <td>{log.change}</td>
+                            <td>{log.timestamp}</td>
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
+        </div>
+    );
 };

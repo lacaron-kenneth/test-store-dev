@@ -4,13 +4,12 @@ import { fetchOrders, updateOrderStatus } from '../../firebase'; // Fetch orders
 import { Order } from '../../firebase'; // Import the Order type
 import { getAuth, onAuthStateChanged } from 'firebase/auth'; // Import Firebase Auth
 import styles from './admin-dashboard.module.scss';
-
+import { Link } from 'react-router-dom';
 export const AdminDashboard: React.FC = () => {
     const [orders, setOrders] = useState<Order[]>([]);
     const [loading, setLoading] = useState(true); // Loading state for fetching orders
     const [error, setError] = useState<string | null>(null); // Error state
     const [userEmail, setUserEmail] = useState<string | null>(null); // State to hold current user's email
-
     // Fetch orders on component mount
     useEffect(() => {
         const loadOrders = async () => {
@@ -82,7 +81,7 @@ export const AdminDashboard: React.FC = () => {
         <div className={styles.dashboard}>
             <h1>Admin Dashboard</h1>
             {userEmail && <p>Welcome, {userEmail}</p>}
-            
+            <Link to="/admin-dashboard/products">Go to Products</Link>
             {/* Search bar */}
             <input
                 type="text"
@@ -95,4 +94,9 @@ export const AdminDashboard: React.FC = () => {
             <OrderTable orders={filteredOrders} updateOrderStatus={handleUpdateOrderStatus} />
         </div>
     );
+
+
+    
 };
+
+

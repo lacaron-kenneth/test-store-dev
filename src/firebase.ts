@@ -1,8 +1,9 @@
 // src/firebase.ts
 import { initializeApp } from 'firebase/app';
 import { getAuth, GoogleAuthProvider, signInWithPopup, signOut } from 'firebase/auth';
-import { addDoc, getDoc, getFirestore, updateDoc, doc, serverTimestamp } from 'firebase/firestore';
-import { collection, getDocs } from 'firebase/firestore';
+import { addDoc, setDoc, getDoc, getFirestore, updateDoc, doc, serverTimestamp, deleteDoc } from 'firebase/firestore';
+import { collection, getDocs, query, orderBy } from 'firebase/firestore';
+import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 
 // Firebase configuration using environment variables
 const firebaseConfig = {
@@ -19,6 +20,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
 export const db = getFirestore(app);
+const storage = getStorage(app);
 
 // Function to handle Google login
 export const loginWithGoogle = async (): Promise<void> => {
@@ -29,6 +31,41 @@ export const loginWithGoogle = async (): Promise<void> => {
 export const logout = async (): Promise<void> => {
   await signOut(auth);
 };
+
+// Define Order interface
+export interface Order {
+  id: string;
+  contact: string;
+  email: string;
+  items: Array<{
+      id: string;
+      image: string;
+      name: string;
+      price: number;
+      quantity: number;
+      variation: string;
+  }>;
+  name: string;
+  timestamp: any;
+  statusTimestamps: any;
+  status: string; // Optional or required based on how it's set up in Firestore
+  total: number;  // Assuming total is calculated from items
+}
+
+// Define Product interface
+export interface Product {
+  id: string;
+  productCategory: string;
+  variations: Array<{
+    name: string;
+    images: string[];
+    description?: string;
+    price?: number;
+    quantity: number;
+  }>;
+  timestamp: any;
+}
+
 
 // Fetch all orders from Firestore
 export const fetchOrders = async (): Promise<Order[]> => {
@@ -49,14 +86,71 @@ export const fetchOrders = async (): Promise<Order[]> => {
       items: data.items || [],
       name: data.name || '',
       timestamp: data.timestamp || null,
-      status: data.status || 'pending', // Default status to 'pending'
-      total, // Calculating total price from items
-      statusTimestamps: data.statusTimestamps || {}, // Ensure status timestamps are included
+      status: data.status || 'pending',
+      total,
+      statusTimestamps: data.statusTimestamps || {},
     };
   });
 
   return orderList;
 };
+
+export const fetchProducts = async (): Promise<Product[]> => {
+  const productsRef = collection(db, 'products');
+  const q = query(productsRef, orderBy('timestamp', 'desc'));
+  const productSnapshot = await getDocs(q);
+  return productSnapshot.docs.map((doc) => ({
+    id: doc.id,
+    ...doc.data(),
+  })) as Product[];
+};
+
+export const addProduct = async (product: Omit<Product, 'id' | 'timestamp'>): Promise<void> => {
+  const docRef = doc(collection(db, 'products')); // Create a document reference with an auto-generated ID
+  await setDoc(docRef, {
+    ...product,
+    id: docRef.id, // Use the generated ID
+    timestamp: serverTimestamp(),
+  });
+};
+
+
+export const updateProduct = async (productId: string, updatedData: Partial<Product>): Promise<void> => {
+  const productDoc = doc(db, 'products', productId);
+  await updateDoc(productDoc, updatedData);
+};
+
+
+// Delete a product from Firestore
+export const deleteProduct = async (productId: string): Promise<void> => {
+  const productDoc = doc(db, 'products', productId);
+  await deleteDoc(productDoc);
+};
+
+// Upload an image to Firebase Storage
+export const uploadImage = async (file: File): Promise<string> => {
+  const storageRef = ref(storage, `product-images/${file.name}-${Date.now()}`);
+  await uploadBytes(storageRef, file);
+  return await getDownloadURL(storageRef);
+};
+
+// Upload multiple images to Firebase Storage
+export const uploadImages = async (files: File[]): Promise<string[]> => {
+  const uploadPromises = files.map(async (file) => {
+    const storageRef = ref(storage, `product-images/${file.name}-${Date.now()}`);
+    await uploadBytes(storageRef, file);
+    return await getDownloadURL(storageRef);
+  });
+  return await Promise.all(uploadPromises);
+};
+
+// Upload an image to Firebase Storage using Blob
+export const uploadImageBlob = async (file: Blob): Promise<string> => {
+  const storageRef = ref(storage, `product-images/${file.name}-${Date.now()}`);
+  await uploadBytes(storageRef, file);
+  return await getDownloadURL(storageRef);
+}
+
 // Update order status, timestamp, and save logs
 export const updateOrderStatus = async (orderId: string, newStatus: string, adminEmail: string) => {
   const orderDoc = doc(db, 'orders', orderId);
@@ -65,7 +159,7 @@ export const updateOrderStatus = async (orderId: string, newStatus: string, admi
   // Update the order status and timestamp
   await updateDoc(orderDoc, {
     status: newStatus,
-    [statusField]: serverTimestamp(), // Update the timestamp for the new status
+    [statusField]: serverTimestamp(),
   });
 
   // Add log entry
@@ -98,29 +192,34 @@ export const getOrderById = async (orderId: string): Promise<Order | null> => {
       timestamp: data.timestamp || null,
       status: data.status || 'pending',
       total,
-      statusTimestamps: data.statusTimestamps || {}, // Ensure status timestamps are included
+      statusTimestamps: data.statusTimestamps || {},
     };
   } else {
     return null;
   }
 };
+// Fetch product by ID
+export const getProductById = async (productId: string): Promise<Product | null> => {
+  const productDoc = doc(db, 'products', productId);
+  const productSnapshot = await getDoc(productDoc);
 
-// Define Order interface
-export interface Order {
-  id: string;
-  contact: string;
-  email: string;
-  items: Array<{
-      id: string;
-      image: string;
-      name: string;
-      price: number;
-      quantity: number;
-      variation: string;
-  }>;
-  name: string;
-  timestamp: any;
-  statusTimestamps: any;
-  status: string; // Optional or required based on how it's set up in Firestore
-  total: number;  // Assuming total is calculated from items
-}
+  if (productSnapshot.exists()) {
+    return {
+      id: productSnapshot.id,
+      ...productSnapshot.data(),
+    } as Product;
+  } else {
+    console.warn('Product not found');
+    return null;
+  }
+};
+
+// Update product variations
+export const updateProductVariations = async (productId: string, updatedVariations: Product['variations']): Promise<void> => {
+  const productDoc = doc(db, 'products', productId);
+  await updateDoc(productDoc, {
+    variations: updatedVariations,
+  });
+};
+
+

@@ -8,14 +8,14 @@ export interface MerchProps {
     image?: any; // Accept functions (dynamic import) and static URLs
     name?: string;
     description?: string;
-    price?: string;
+    price?: number;
 }
 
 export const Merch = ({
     image = Fallback, // Default to fallback image
     name = 'merch',
     description = 'Nice looking merch',
-    price = 'P0.00',
+    price = 0,
 }: MerchProps) => {
     const [loadedImage, setLoadedImage] = useState<string | null>(null); // State to hold the loaded image URL
 
@@ -46,7 +46,7 @@ export const Merch = ({
             <div className={styles.content}>
                 <h2 className={styles.header1}>{name}</h2>
                 <p>{description}</p>
-                <p className={styles.p1}>{`Price: P ${price}`}</p>
+                {/* <p className={styles.p1}>{`Price: P ${price}`}</p> */}
             </div>
         </div>
     );

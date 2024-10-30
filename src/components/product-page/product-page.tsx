@@ -64,7 +64,7 @@ export const ProductPage = () => {
         addToCart({
           id: product.id,
           name: selectedVar.name,
-          price: selectedVar.price || product.price,
+          price: selectedVar.price ?? 0,
           variation: selectedVariation,
           image: loadedImage, // Pass the currently loaded image
           quantity: quantity,

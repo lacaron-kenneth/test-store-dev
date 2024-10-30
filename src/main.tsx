@@ -16,7 +16,7 @@ import { Login } from './components/login/login';
 import { PrivateRoute } from './routes/PrivateRoute';
 import { AuthProvider } from './context/AuthContext';
 import { AdminRoutes } from './routes/AdminRoutes';
-import { ProductDetailPage } from './components/product-page/product-detail-page';
+import { ProductDetail } from './components/product-page/product-detail-page';
 import { AdminProductPage } from './components/admin-dashboard/admin-product-page';
 import { OrderDetailsPage } from './components/order-details-page/order-details-page';
 import { OrderLogs } from './components/order-log/order-log';
@@ -41,7 +41,6 @@ root.render(
                         <Route path="/login" element={<Login />} />
                         <Route path="/" element={<HomePage />} />
                         <Route path="/browse" element={<BrowsePage />} />
-                        <Route path="/search" element={<Search />} />
                         <Route path="/merch/:id" element={<ProductPage />} />
                        
                         <Route path="/cart" element={<CartPage />} />

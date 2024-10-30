@@ -35,13 +35,22 @@ export const Gallery = ({ className, products = [] }: GalleryProps) => {
 
   const sortProductsByPrice = (products: Product[]) => {
     if (priceSort === 'priceHighToLow') {
-      return [...products].sort((a, b) => b.variations[0].price - a.variations[0].price);
+      return [...products].sort((a, b) => {
+        const priceA = a.variations[0]?.price ?? 0;
+        const priceB = b.variations[0]?.price ?? 0;
+        return priceB - priceA;
+      });
     }
     if (priceSort === 'priceLowToHigh') {
-      return [...products].sort((a, b) => a.variations[0].price - b.variations[0].price);
+      return [...products].sort((a, b) => {
+        const priceA = a.variations[0]?.price ?? 0;
+        const priceB = b.variations[0]?.price ?? 0;
+        return priceA - priceB;
+      });
     }
     return products;
   };
+  
 
   const sortProductsByOtherCriteria = (products: Product[]) => {
     if (sortBy === 'latest') {

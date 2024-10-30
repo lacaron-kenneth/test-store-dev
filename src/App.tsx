@@ -12,7 +12,6 @@ import { PrivateRoute } from './routes/PrivateRoute';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
 import { AdminRoutes } from './routes/AdminRoutes';
-import { Search } from './components/search/search';
 import { ProductPage } from './components/product-page/product-page';
 
 function App() {
@@ -35,7 +34,6 @@ function App() {
                         <Route path="/login" element={<Login />} />
                         <Route path="/" element={<HomePage />} />
                         <Route path="/browse" element={<BrowsePage />} />
-                        <Route path="/search" element={<Search />} />
                         <Route path="/merch/:id" element={<ProductPage />} />
                         <Route path="/cart" element={<CartPage />} />
                         <Route path="/thank-you" element={<ThankYouPage />} />

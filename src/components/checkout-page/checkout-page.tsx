@@ -25,7 +25,7 @@ export const CheckoutPage = () => {
             };
             const docRef = await addDoc(collection(db, 'orders'), orderData);
             console.log('Order placed with ID: ', docRef.id);
-            clearCart(); // Clear cart after placing order
+            // clearCart(); // Clear cart after placing order
             navigate('/thank-you', { state: { orderId: docRef.id } });
         } catch (error) {
             console.error('Error placing order: ', error);

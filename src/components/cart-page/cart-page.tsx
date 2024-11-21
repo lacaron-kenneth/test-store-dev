@@ -32,44 +32,43 @@ export const CartPage = () => {
     }, []);
 
     const handleQuantityChange = (id: string, variation: string, newQuantity: number) => {
-        updateQuantity(id, variation, newQuantity);
-    };
-
-    const handleRemoveItem = (id: string, variation: string) => {
-        removeFromCart(id, variation);
-    };
-
-    const handlePlaceOrder = async () => {
+        if (user) updateQuantity(user.uid, id, variation, newQuantity);
+      };
+      
+      const handleRemoveItem = (id: string, variation: string) => {
+        if (user) removeFromCart(user.uid, id, variation);
+      };
+      
+      const handlePlaceOrder = async () => {
         if (!name || !email || !contact) {
-            setErrorMessage('Please fill in all fields.');
-            return;
+          setErrorMessage('Please fill in all fields.');
+          return;
         }
-
+      
         try {
-            setLoading(true);
-            const orderDetails = {
-                name,
-                email,
-                contact,
-                items: cart,
-                total, // Add total price
-                userId: user?.uid || null, // Store user UID
-                status: 'pending', // Default status
-                timestamp: new Date(), // Store order date
-            };
-
-            const docRef = await addDoc(collection(db, 'orders'), orderDetails);
-            clearCart(); // Clear cart after order is placed
-            alert('Order placed successfully!');
-            navigate('/thank-you', { state: { orderId: docRef.id, cart: cart } });
+          setLoading(true);
+          const orderDetails = {
+            name,
+            email,
+            contact,
+            items: cart,
+            total,
+            userId: user?.uid || null,
+            status: 'pending',
+            timestamp: new Date(),
+          };
+      
+          const docRef = await addDoc(collection(db, 'orders'), orderDetails);
+          if (user) await clearCart(user.uid);
+          alert('Order placed successfully!');
+          navigate('/thank-you', { state: { orderId: docRef.id, cart: cart } });
         } catch (error) {
-            console.error('Error adding document: ', error);
-            setErrorMessage('Failed to place order. Please try again later.');
+          console.error('Error placing order:', error);
+          setErrorMessage('Failed to place order. Please try again later.');
         } finally {
-            setLoading(false);
+          setLoading(false);
         }
-    };
-
+      };
     return (
         <div className={styles.cartpage}>
             <div className={styles.cart}>
